@@ -33,3 +33,28 @@ fetch('http://localhost:5678/api/works')
         });
     })
     .catch((erreur) => console.log('Erreur : ' + erreur));
+
+
+/// Récupération de l'API catégories pour les filtres ///
+fetch('http://localhost:5678/api/categories')
+    .then(result => result.json())
+    .then(categories => {
+
+        const boutonTous = document.querySelector(".bouton-tous");
+
+        boutonTous.addEventListener("click", function () {
+            const travauxTous = categories.filter(function (travaux) {
+                return travaux.id <= 3;
+            });
+            console.log(travauxTous)
+        })
+
+        const boutonObjets = document.querySelector(".bouton-objets");
+
+        boutonObjets.addEventListener("click", function () {
+            const travauxObjets = categories.filter(function (travaux) {
+                return travaux.id === 1;
+            });
+            console.log(travauxObjets)
+        })
+    })
