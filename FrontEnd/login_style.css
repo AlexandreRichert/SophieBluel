@@ -80,6 +80,11 @@ form h2 {
     background: #1D6154;
     border-radius: 60px;
     color: #FFFFFF;
+    margin-bottom: 20px;
+}
+
+.login-form a {
+   text-decoration: underline #3D3D3D;
 }
 
 footer {
