@@ -34,26 +34,30 @@ fetch('http://localhost:5678/api/works')
     })
     .catch((erreur) => console.log('Erreur : ' + erreur));
 
-
-/// Récupération de l'API catégories pour les filtres ///
-
-
+///\\\\\\\\\\\\\\\\ BOUTONS FILTRES ///////////////////
+/// Récupération de l'API pour les filtres ///
 fetch('http://localhost:5678/api/works/')
     .then(result => result.json())
     .then(categories => {
 
-
+/// Sélection du bouton tous ////
         const boutonTous = document.querySelector(".bouton-tous");
-
+            /// Au clique du bouton tous, retourne les éléments de toutes les catégories ////
         boutonTous.addEventListener("click", function () {
             const travauxTous = categories.filter(function (travaux) {
                 return travaux.categoryId <= 3;
             });
+            /// affiche à la console, les éléments de toutes les catégories (pas nécessaire) ///
             console.log(travauxTous)
-            const gallery = document.querySelector('.gallery');
-            gallery.innerHTML="";
-            travauxTous.forEach(data => {
 
+            
+            ///Sélection de la div gallery ///
+            const gallery = document.querySelector('.gallery');
+            /// suppression du contenu déjà existant dans la div gallery ///
+            gallery.innerHTML="";
+            /// parcours du tableau contenant tous les éléments ///
+            travauxTous.forEach(data => {
+            /// création des éléments de gallery pour chaque travaux /// 
                 const figure = document.createElement('figure');
                 const img = document.createElement('img');
                 const figcaption = document.createElement('figcaption');
@@ -73,15 +77,20 @@ fetch('http://localhost:5678/api/works/')
             
         })
 
+        /// Sélection du bouton objets ////
         const boutonObjets = document.querySelector(".bouton-objets");
-
+            /// Au clique du bouton objets, retourne les éléments de la catégorie objet ////
         boutonObjets.addEventListener("click", function () {
             const travauxObjets = categories.filter(function (travaux) {
                 return travaux.categoryId === 1;
             });
+            /// affiche à la console, les éléments de la catégorie objet  ///
             console.log(travauxObjets)
+             ///Sélection de la div gallery ///
             const gallery = document.querySelector('.gallery');
+            /// suppression du contenu déjà existant dans la div gallery ///
             gallery.innerHTML="";
+            /// parcours du tableau contenant les objets filtrés ///
             travauxObjets.forEach(data => {
 
                 const figure = document.createElement('figure');
@@ -101,16 +110,20 @@ fetch('http://localhost:5678/api/works/')
 
             })
             });
-
+        /// Sélection du bouton appartements ////
         const boutonsAppartements = document.querySelector(".bouton-appartements");
-
+        /// Au clique du bouton appartements, retourne les éléments de la catégorie appt ////
         boutonsAppartements.addEventListener("click", function () {
             const travauxAppartements = categories.filter(function (travaux) {
                 return travaux.categoryId === 2;
             });
+            /// affiche à la console, les éléments de la catégorie appt  ///
             console.log(travauxAppartements)
+            ///Sélection de la div gallery ///
             const gallery = document.querySelector('.gallery');
+            /// suppression du contenu déjà existant dans la div gallery ///
             gallery.innerHTML="";
+            /// parcours du tableau contenant les appt filtrés ///
             travauxAppartements.forEach(data => {
 
                 const figure = document.createElement('figure');
@@ -162,70 +175,3 @@ fetch('http://localhost:5678/api/works/')
         })
     
 
-/*const reponse = await fetch('http://localhost:5678/api/works/');
-const category = await reponse.json();
-
-function getWorks(category){
-    for (let i = 0; i < category.length; i++) {
-
-        const article = category[i];
-        // Récupération de l'élément du DOM qui accueillera les fiches
-        const sectionFiches = document.querySelector(".buttons");
-        // Création d’une balise dédiée à une pièce automobile
-        const pieceElement = document.createElement("article");
-        // Création des balises 
-        const imageElement = document.createElement("img");
-        imageElement.src = article.image;
-        const nomElement = document.createElement("h2");
-        nomElement.innerText = article.nom;
-        const prixElement = document.createElement("p");
-        prixElement.innerText = `Prix: ${article.prix} € (${article.prix < 35 ? "€" : "€€€"})`;
-        const categorieElement = document.createElement("p");
-        categorieElement.innerText = article.categorie ?? "(aucune catégorie)";
-        const descriptionElement = document.createElement("p");
-        descriptionElement.innerText = article.description ?? "Pas de description pour le moment.";
-        const stockElement = document.createElement("p");
-        stockElement.innerText = article.disponibilite ? "En stock" : "Rupture de stock";
-        //Code ajouté
-        const avisBouton = document.createElement("button");
-        avisBouton.dataset.id = article.id;
-        avisBouton.textContent = "Afficher les avis";
-        
-        // On rattache la balise article a la section Fiches
-        sectionFiches.appendChild(pieceElement);
-        pieceElement.appendChild(imageElement);
-        pieceElement.appendChild(nomElement);
-        pieceElement.appendChild(prixElement);
-        pieceElement.appendChild(categorieElement);
-        pieceElement.appendChild(descriptionElement);
-        pieceElement.appendChild(stockElement);
-        //Code aJouté
-        pieceElement.appendChild(avisBouton);
-    
-        }
-        ajoutListenersAvis();
-}
-
-genererPieces(pieces);
-
-    //gestion des bouttons 
-const boutonTrier = document.querySelector(".btn-trier");
-
-boutonTrier.addEventListener("click", function () {
-    const piecesOrdonnees = Array.from(pieces);
-    piecesOrdonnees.sort(function (a, b) {
-        return a.prix - b.prix;
-        });
-        document.querySelector(".fiches").innerHTML = "";
-    genererPieces(piecesOrdonnees);
-});
-
-const boutonFiltrer = document.querySelector(".btn-filtrer");
-
-boutonFiltrer.addEventListener("click", function () {
-    const piecesFiltrees = pieces.filter(function (piece) {
-        return piece.prix <= 35;
-    });
-    document.querySelector(".fiches").innerHTML = "";
-    genererPieces(piecesFiltrees);
-}); */
