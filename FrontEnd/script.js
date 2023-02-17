@@ -1,6 +1,4 @@
-
-
-/// Récupération de tous les travaux de l'API ///
+/// \\\\\\\\\Récupération de tous les travaux de l'API ///
 
 fetch('http://localhost:5678/api/works')
     .then(response => response.json())
@@ -34,6 +32,9 @@ fetch('http://localhost:5678/api/works')
     })
     .catch((erreur) => console.log('Erreur : ' + erreur));
 
+
+
+
 ///\\\\\\\\\\\\\\\\ BOUTONS FILTRES ///////////////////
 /// Récupération de l'API pour les filtres ///
 fetch('http://localhost:5678/api/works/')
@@ -50,7 +51,7 @@ fetch('http://localhost:5678/api/works/')
             /// affiche à la console, les éléments de toutes les catégories (pas nécessaire) ///
             console.log(travauxTous)
 
-            
+
             ///Sélection de la div gallery ///
             const gallery = document.querySelector('.gallery');
             /// suppression du contenu déjà existant dans la div gallery ///
@@ -174,4 +175,7 @@ fetch('http://localhost:5678/api/works/')
             });
         })
     
+
+
+
 

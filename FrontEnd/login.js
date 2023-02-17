@@ -30,11 +30,11 @@ formEl.addEventListener('submit',event => {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(Object.fromEntries(formData))
     })  
         .then(res => res.json())
         .then(result => console.log(result))
-        .catch(error => console.log(error));
+        .catch(error => console.log(error, "Erreur dans l'identifiant ou le mot de passe"))
 });
 
 /*let response = fetch ('http://localhost:5678/api/users/login', {
