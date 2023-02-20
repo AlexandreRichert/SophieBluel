@@ -16,26 +16,51 @@
     password: 'SOphie'
 }*/
 
-const formEl = document.getElementById('login-form');
-console.log(formEl);
+async function getToken () {
 
-formEl.addEventListener('submit',event => {
-    event.preventDefault();
 
-    const formData = new FormData(formEl);
-    console.log(formData.get('email'));
-    console.log(formData.get('password'));
-    fetch ('http://localhost:5678/api/users/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(Object.fromEntries(formData))
-    })  
-        .then(res => res.json())
-        .then(result => console.log(result))
-        .catch(error => console.log(error, "Erreur dans l'identifiant ou le mot de passe"))
-});
+    const formEl = document.getElementById('login-form');
+    console.log(formEl);
+
+    formEl.addEventListener('submit',event => {
+        event.preventDefault();
+
+        const formData = new FormData(formEl);
+        console.log(formData.get('email'));
+        console.log(formData.get('password'));
+        fetch ('http://localhost:5678/api/users/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(Object.fromEntries(formData))
+        })  
+        .then(function(res) {
+            if (res.ok) {
+                console.info(res);
+                console.log("la requête cart.js est opérationelle.");
+                return res.json();
+            }
+        })
+        .then(function(value) {
+            if (value) {
+                sessionStorage.setItem('IDcommand', value.token);
+                var token = sessionStorage.getItem('IDcommand');
+                if (token != null) {
+                    window.location.href = "index.html";
+                }
+            } else {
+                alert("Une erreur est survenue. Veuillez réessayer ultérieurement.");
+            }
+        })
+        .catch(function(err) {
+            console.log("Une erreur est intervenue lors de la requête dans cart.js: " + err);
+        });
+        console.log(sessionStorage.getItem('IDcommand')); //renvoie null
+    })
+}
+
+getToken();
 
 /*let response = fetch ('http://localhost:5678/api/users/login', {
     method: 'POST',
