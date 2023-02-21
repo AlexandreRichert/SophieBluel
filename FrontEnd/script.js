@@ -209,4 +209,5 @@ function edits () {
         publishChanges.appendChild(publishChangesText);
         containerEdits.appendChild(publishChanges);
         
+        document.getElementById("login").innerHTML ="logout";
 }

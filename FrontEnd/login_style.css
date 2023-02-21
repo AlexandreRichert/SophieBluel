@@ -5,7 +5,8 @@
 
 body {
     padding: 30px 100px;
-    background: #FFFEF8
+    background: #FFFEF8;
+    max-width: 1140px;
 }
 
 header, nav ul {
