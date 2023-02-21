@@ -11,12 +11,7 @@
 /// Message d'erreur quand utilisateur et/ou mdp incorrect
 
 
-/*const datatest = {
-    username: 'sophie.bluel@test.tld',
-    password: 'SOphie'
-}*/
-
-async function getToken () {
+async function login () {
 
 
     const formEl = document.getElementById('login-form');
@@ -37,17 +32,15 @@ async function getToken () {
         })  
         .then(function(res) {
             if (res.ok) {
-                console.info(res);
-                console.log("la requête cart.js est opérationelle.");
                 return res.json();
             }
         })
         .then(function(value) {
             if (value) {
-                sessionStorage.setItem('IDcommand', value.token);
-                var token = sessionStorage.getItem('IDcommand');
+                sessionStorage.setItem('token', value.token);
+                var token = sessionStorage.getItem('token');
                 if (token != null) {
-                    window.location.href = "index.html";
+                    window.location.replace("index.html");
                 }
             } else {
                 alert("Une erreur est survenue. Veuillez réessayer ultérieurement.");
@@ -56,42 +49,36 @@ async function getToken () {
         .catch(function(err) {
             console.log("Une erreur est intervenue lors de la requête dans cart.js: " + err);
         });
-        console.log(sessionStorage.getItem('IDcommand')); //renvoie null
     })
 }
 
-getToken();
+login();
 
-/*let response = fetch ('http://localhost:5678/api/users/login', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(formData)
-})  .then(res => res.json())
-    .then(data => console.log(data))
-    .catch(error => console.log(error));
-*/
-/*
-let username1 = document.getElementById('email').value;
-let password1 = document.getElementById('password').value;
-
-const data = {
-    username: 'usern'
-}
-/// récupération du formulaire de la page ///
-const form = document.querySelector('.login-form');
-console.log(form);
-console.log(data);
-
-
-/// à la validation du formulaire --> /// */
-/*form.addEventListener('submit', (event) => {
-///récupération d
-    event.preventDefault();
-    let email = document.getElementById('username').value;
-    let email = document.getElementById('password').value;
-    if (username.data === username && password.data === password) {
-        console.log(2)
+/*async function fetchMyDocument() {      
+    try {
+        let response = await fetch('./index.html'); // Gets a promise
+        document.body.innerHTML = await response.text(); // Replaces body with response
+        const para = document.createElement("p");
+        const node = document.createTextNode("This is new.");
+        para.appendChild(node);
+        const element = document.getElementById("introduction");
+        element.appendChild(para);
+    } catch (err) {
+      console.log('Fetch error:' + err); // Error handling
     }
-});*/
+  }
+*/
+
+/*function editsAfterLogin() {
+    fetch('index.html').then(function (response) {
+        // The API call was successful!
+        return response.text();
+    }).then(function (html) {
+        // This is the HTML from our response as a text string
+        console.log(html);
+    }).catch(function (err) {
+        // There was an error
+        console.warn('Something went wrong.', err);
+    });
+}
+*/

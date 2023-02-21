@@ -176,6 +176,19 @@ fetch('http://localhost:5678/api/works/')
         })
     
 
+function editsAfterLogin () {
+    var token = sessionStorage.getItem('token');
+    if (token != null) {
+        const para = document.createElement("p");
+        const node = document.createTextNode("This is new.");
+        para.appendChild(node);
 
+        const element = document.getElementById("body");
+        const h1 = document.getElementById("header");
+        element.insertBefore(para,h1);
+    }
+}
+
+editsAfterLogin ();
 
 
