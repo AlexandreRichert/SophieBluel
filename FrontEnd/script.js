@@ -179,16 +179,34 @@ fetch('http://localhost:5678/api/works/')
 function editsAfterLogin () {
     var token = sessionStorage.getItem('token');
     if (token != null) {
-        const para = document.createElement("p");
-        const node = document.createTextNode("This is new.");
-        para.appendChild(node);
-
-        const element = document.getElementById("body");
-        const h1 = document.getElementById("header");
-        element.insertBefore(para,h1);
+        edits();
     }
 }
 
 editsAfterLogin ();
 
+function edits () {
+        const element = document.getElementById("body");
+        const header = document.getElementById("header");
+        const containerEdits = document.createElement("div");
+        containerEdits.setAttribute('id','container-edits');
+        element.insertBefore(containerEdits,header);
 
+        const icon = document.createElement("i");
+        icon.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>'
+        icon.setAttribute('id','icon-edit');
+        containerEdits.appendChild(icon);
+
+        const editionMode = document.createElement("p");
+        const editionModeText = document.createTextNode("Mode édition");
+        editionMode.setAttribute('id','edition-mode');
+        editionMode.appendChild(editionModeText);
+        containerEdits.appendChild(editionMode);
+
+        const publishChanges = document.createElement("p");
+        const publishChangesText = document.createTextNode("publier les changements");
+        publishChanges.setAttribute('id','publish-changes');
+        publishChanges.appendChild(publishChangesText);
+        containerEdits.appendChild(publishChanges);
+        
+}

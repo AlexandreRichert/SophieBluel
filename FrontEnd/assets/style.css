@@ -222,3 +222,36 @@ footer nav ul {
 	margin: 2em
 }
 
+#container-edits{
+	display: flex;
+    justify-content: center;
+    background: black;
+    height: 60px;
+    align-items: center;
+}
+
+#container-edits>* {
+	color: white;
+	margin-left: 10px;
+}
+
+#edition-mode {
+	font-size: 16px;
+	font-weight: 400;
+	font-family: 'Work Sans', sans-serif;
+
+}
+
+#icon-edit {
+	font-size: 16px;
+}
+
+#publish-changes {
+	font-size: 14px;
+	font-weight: 500;
+	font-family: 'Work Sans', sans-serif;
+	background-color: #FFFFFF;
+	color: black;
+	padding: 10px 20px;
+	border-radius: 60px;
+}
