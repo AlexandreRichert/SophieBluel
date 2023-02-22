@@ -193,7 +193,7 @@ function edits () {
         element.insertBefore(containerEdits,header);
 
         const icon = document.createElement("i");
-        icon.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>'
+        icon.innerHTML = '<i class="fa-regular fa-pen-to-square"></i>'
         icon.setAttribute('id','icon-edit');
         containerEdits.appendChild(icon);
 
@@ -210,4 +210,44 @@ function edits () {
         containerEdits.appendChild(publishChanges);
         
         document.getElementById("login").innerHTML ="logout";
-}
+
+        const getIntro = document.getElementById("figure");
+        const modifyUnderIntro = document.createElement("div");
+        modifyUnderIntro.setAttribute('id','container-intro');
+        getIntro.appendChild(modifyUnderIntro);
+   
+        const iconUnderIntro = document.createElement("i");
+        iconUnderIntro.innerHTML = '<i class="fa-regular fa-pen-to-square"></i>'
+        iconUnderIntro.setAttribute('id','icon-edit');
+        modifyUnderIntro.appendChild(iconUnderIntro);
+
+        const firstModify = document.createElement("p");
+        const firstModifyText = document.createTextNode("modifier");
+        firstModify.setAttribute('id','first-modify');
+        firstModify.appendChild(firstModifyText);
+        modifyUnderIntro.appendChild(firstModify);
+
+        const hideBoutons = document.getElementById("boutons");
+        hideBoutons.style.display ='none';
+
+        const getContainerProjects = document.getElementById("portfolio")
+        const getProjectTitle = document.getElementById("mes-projets");
+        const modifyNextToProject = document.createElement("div");
+        modifyNextToProject.setAttribute('id','container-projects');
+        getContainerProjects.append(modifyNextToProject);
+        modifyNextToProject.appendChild(getProjectTitle)
+
+        const iconNextToProject = document.createElement("i");
+        iconNextToProject.innerHTML = '<i class="fa-regular fa-pen-to-square"></i>'
+        iconNextToProject.setAttribute('id','icon-edit-project');
+        modifyNextToProject.append(iconNextToProject);
+
+        const secondModify = document.createElement("p");
+        const secondModifyText = document.createTextNode("modifier");
+        secondModify.setAttribute('id','second-modify');
+        secondModify.appendChild(secondModifyText);
+        modifyNextToProject.appendChild(secondModify);
+
+        hideBoutons.before(modifyNextToProject);
+    }
+

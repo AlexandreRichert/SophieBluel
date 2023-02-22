@@ -255,3 +255,42 @@ footer nav ul {
 	padding: 10px 20px;
 	border-radius: 60px;
 }
+
+#container-intro {
+	display: flex;
+	width: 80%;
+	margin: auto;
+	padding-top: 20px;
+}
+
+#container-intro > * {
+	margin-right: 10px;
+}
+
+#first-modify {
+	font-size: 14px;
+	font-weight: 400;
+	font-family: 'Work Sans', sans-serif;
+}
+
+#container-projects {
+	display: flex;
+	justify-content: center;
+	align-items: baseline;
+}
+
+#container-projects h2 {
+	margin-right: 30px;
+	
+}
+
+#container-projects #icon-edit-project {
+	margin-right: 10px;
+	font-size: 16px;
+}
+
+#second-modify {
+	font-size: 14px;
+	font-weight: 400;
+	font-family: 'Work Sans', sans-serif;
+}
