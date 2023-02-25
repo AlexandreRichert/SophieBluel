@@ -184,6 +184,7 @@ function editsAfterLogin () {
 }
 
 editsAfterLogin ();
+///logout ;
 
 function edits () {
         const element = document.getElementById("body");
@@ -210,6 +211,8 @@ function edits () {
         containerEdits.appendChild(publishChanges);
         
         document.getElementById("login").innerHTML ="logout";
+        
+        
 
         const getIntro = document.getElementById("figure");
         const modifyUnderIntro = document.createElement("div");
@@ -242,7 +245,7 @@ function edits () {
         iconNextToProject.setAttribute('id','icon-edit-project');
         modifyNextToProject.append(iconNextToProject);
 
-        const secondModify = document.createElement("p");
+        const secondModify = document.createElement("button");
         const secondModifyText = document.createTextNode("modifier");
         secondModify.setAttribute('id','second-modify');
         secondModify.appendChild(secondModifyText);
@@ -251,3 +254,7 @@ function edits () {
         hideBoutons.before(modifyNextToProject);
     }
 
+/*function logout () {
+    const getLogoutbutton = document.
+    window.location.reload();
+} */

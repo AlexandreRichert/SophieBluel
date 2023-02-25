@@ -43,42 +43,14 @@ async function login () {
                     window.location.replace("index.html");
                 }
             } else {
-                alert("Une erreur est survenue. Veuillez réessayer ultérieurement.");
+                alert("Erreur dans l'identifiant ou le mot de passe");
             }
         })
         .catch(function(err) {
-            console.log("Une erreur est intervenue lors de la requête dans cart.js: " + err);
+            console.log("Une erreur est intervenue lors de la requête " + err);
         });
     })
 }
 
 login();
 
-/*async function fetchMyDocument() {      
-    try {
-        let response = await fetch('./index.html'); // Gets a promise
-        document.body.innerHTML = await response.text(); // Replaces body with response
-        const para = document.createElement("p");
-        const node = document.createTextNode("This is new.");
-        para.appendChild(node);
-        const element = document.getElementById("introduction");
-        element.appendChild(para);
-    } catch (err) {
-      console.log('Fetch error:' + err); // Error handling
-    }
-  }
-*/
-
-/*function editsAfterLogin() {
-    fetch('index.html').then(function (response) {
-        // The API call was successful!
-        return response.text();
-    }).then(function (html) {
-        // This is the HTML from our response as a text string
-        console.log(html);
-    }).catch(function (err) {
-        // There was an error
-        console.warn('Something went wrong.', err);
-    });
-}
-*/
