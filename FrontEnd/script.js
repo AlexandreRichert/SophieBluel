@@ -175,8 +175,9 @@ fetch('http://localhost:5678/api/works/')
             });
         })
     
-
+/// fonction qui ajoute les modifications à la page d'accueil après connexion réussie ///
 function editsAfterLogin () {
+    ///récupération du token stocké
     var token = sessionStorage.getItem('token');
     if (token != null) {
         edits();
@@ -184,36 +185,49 @@ function editsAfterLogin () {
 }
 
 editsAfterLogin ();
-///logout ;
+
 
 function edits () {
+
+        /// création de la bande noire au dessus du header ///
+
+        /// création d'une div regroupant les éléments de la bande noire///
         const element = document.getElementById("body");
         const header = document.getElementById("header");
         const containerEdits = document.createElement("div");
         containerEdits.setAttribute('id','container-edits');
+        /// insertion de cette div au dessus du header ///
         element.insertBefore(containerEdits,header);
 
+
+        /// création de l'icône d'édition ///
         const icon = document.createElement("i");
         icon.innerHTML = '<i class="fa-regular fa-pen-to-square"></i>'
         icon.setAttribute('id','icon-edit');
+        /// insertion de cette icône dans la div créée précédemment///
         containerEdits.appendChild(icon);
 
+        /// création du texte "Mode édition" ///
         const editionMode = document.createElement("p");
         const editionModeText = document.createTextNode("Mode édition");
         editionMode.setAttribute('id','edition-mode');
         editionMode.appendChild(editionModeText);
+        ///insertion de ce texte dans la div créée précédemment///
         containerEdits.appendChild(editionMode);
 
+        /// création du texte "publier les changements" ///
         const publishChanges = document.createElement("p");
         const publishChangesText = document.createTextNode("publier les changements");
         publishChanges.setAttribute('id','publish-changes');
         publishChanges.appendChild(publishChangesText);
+        ///insertion de ce texte dans la div créée précédemment///
         containerEdits.appendChild(publishChanges);
         
+        /// remplacement de "login" par "logout" dans nav ///
         document.getElementById("login").innerHTML ="logout";
         
         
-
+        /// création d'une div en dessous de l'image de présentation ///
         const getIntro = document.getElementById("figure");
         const modifyUnderIntro = document.createElement("div");
         modifyUnderIntro.setAttribute('id','container-intro');
@@ -230,6 +244,7 @@ function edits () {
         firstModify.appendChild(firstModifyText);
         modifyUnderIntro.appendChild(firstModify);
 
+        /// Masquer les boutons filtres ///
         const hideBoutons = document.getElementById("boutons");
         hideBoutons.style.display ='none';
 
@@ -254,7 +269,38 @@ function edits () {
         hideBoutons.before(modifyNextToProject);
     }
 
-/*function logout () {
-    const getLogoutbutton = document.
-    window.location.reload();
-} */
+
+function addModalElements () {
+    fetch('http://localhost:5678/api/works')
+    .then(response => response.json())
+    .then(projects => {
+
+
+        const getContainerImages = document.querySelector('.container-images');
+        
+
+        /// suppression du contenu déjà existant dans la div gallery ///
+
+
+        /// création des éléments de gallery pour chaque travaux /// 
+        projects.forEach(element => {
+            const figure = document.createElement('figure');
+            figure.setAttribute('id','figure-modal');
+            const img = document.createElement('img');
+            img.setAttribute('id','image-modal');
+            /// attribution à chaque élément, l'image et le titre ///
+            img.src = element.imageUrl;
+            img.alt = element.title;
+            
+
+            /// attribution de l'image et de figcaption à son élément parent : figure ///
+            figure.appendChild(img);
+            /// attribution de figure à son élément parent : gallery ///
+            getContainerImages.appendChild(figure);
+            
+        });
+    })
+    .catch((erreur) => console.log('Erreur : ' + erreur));
+}
+
+addModalElements();
