@@ -277,7 +277,8 @@ function addModalElements () {
 
 
         const getContainerImages = document.querySelector('.container-images');
-        
+        const getEdition = document.querySelector('.edition');
+
 
         /// suppression du contenu déjà existant dans la div gallery ///
 
@@ -291,6 +292,17 @@ function addModalElements () {
             /// attribution à chaque élément, l'image et le titre ///
             img.src = element.imageUrl;
             img.alt = element.title;
+
+            const iconTrash = document.createElement("i");
+            iconTrash.innerHTML = '<i class="fa-regular fa-trash-can"></i>'
+            iconTrash.setAttribute('id','icon-modal');
+            figure.appendChild(iconTrash);
+
+            /*const edition = document.createElement("p");
+            const editionText = document.createTextNode("éditer");
+            edition.setAttribute('id','editer');
+            edition.appendChild(editionText);
+            getEdition.appendChild(edition);*/
             
 
             /// attribution de l'image et de figcaption à son élément parent : figure ///

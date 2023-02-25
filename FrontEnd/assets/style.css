@@ -337,10 +337,28 @@ footer nav ul {
 
 #figure-modal {
 	margin-left: 10px;
+	margin-top: 10px;
+	display: flex;
+	justify-content: flex-end;
 }
 
 #image-modal {
 	width: 80px;
 	height: 105px;
 	object-fit: cover;
+	position: relative;
+	z-index: 0;
+}
+
+#icon-modal {
+	position: absolute;
+	z-index: 1;
+	margin-top: 4px;
+	margin-right: 2px;
+	color: #FFFFFF;
+	background-color: black;
+	width: 14px;
+	height: 15px;
+	text-align: center;
+	padding: 1px;
 }
