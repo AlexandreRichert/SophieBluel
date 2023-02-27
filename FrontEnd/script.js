@@ -263,7 +263,9 @@ function edits () {
         const secondModify = document.createElement("button");
         const secondModifyText = document.createTextNode("modifier");
         secondModify.setAttribute('id','second-modify');
+        ///secondModify.setAttribute('href','#modal');
         secondModify.appendChild(secondModifyText);
+        ///secondModify.href = "#modal";
         modifyNextToProject.appendChild(secondModify);
 
         hideBoutons.before(modifyNextToProject);
@@ -298,11 +300,11 @@ function addModalElements () {
             iconTrash.setAttribute('id','icon-modal');
             figure.appendChild(iconTrash);
 
-            /*const edition = document.createElement("p");
+            const edition = document.createElement("p");
             const editionText = document.createTextNode("éditer");
             edition.setAttribute('id','editer');
             edition.appendChild(editionText);
-            getEdition.appendChild(edition);*/
+            figure.appendChild(edition);
             
 
             /// attribution de l'image et de figcaption à son élément parent : figure ///
@@ -316,3 +318,14 @@ function addModalElements () {
 }
 
 addModalElements();
+
+function showModal () {
+    const getModal = document.getElementById('modal');
+    const btnModify = document.getElementById('second-modify');
+    console.log(getModal);
+    btnModify.addEventListener("click", function () {
+        getModal.style.display ='flex';
+})
+}
+
+showModal();
