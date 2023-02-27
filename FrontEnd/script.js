@@ -329,3 +329,14 @@ function showModal () {
 }
 
 showModal();
+
+function closeModal () {
+    const getModal = document.getElementById('modal');
+    const btnClose = document.getElementById('cross-mark');
+    console.log(btnClose);
+    btnClose.addEventListener("click", function () {
+        getModal.style.display ='none';
+})
+}
+
+closeModal();
