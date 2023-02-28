@@ -322,21 +322,29 @@ addModalElements();
 function showModal () {
     const getModal = document.getElementById('modal');
     const btnModify = document.getElementById('second-modify');
-    console.log(getModal);
     btnModify.addEventListener("click", function () {
         getModal.style.display ='flex';
 })
+    getModal.addEventListener("click", closeModal)
+    getModal.querySelector('#cross-mark').addEventListener('click', closeModal)
+    getModal.querySelector('.modal-wrapper').addEventListener('click', Propagation)
 }
 
 showModal();
 
 function closeModal () {
     const getModal = document.getElementById('modal');
-    const btnClose = document.getElementById('cross-mark');
-    console.log(btnClose);
-    btnClose.addEventListener("click", function () {
-        getModal.style.display ='none';
-})
+    getModal.style.display ='none';
+   
+}
+
+
+function Propagation (e){
+    e.stopPropagation()
 }
 
 closeModal();
+
+window.addEventListener('click', e => {
+    console.log(e.target)
+})
