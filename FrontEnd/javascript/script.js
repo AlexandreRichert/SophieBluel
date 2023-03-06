@@ -1,11 +1,9 @@
 /// \\\\\\\\\Récupération de tous les travaux de l'API ///
 
-fetch('http://localhost:5678/api/works')
-    .then(response => response.json())
-    .then(projects => {
 
 
-        const gallery = document.querySelector('.gallery');
+function showProjects(projects) {
+    const gallery = document.querySelector('.gallery');
 
         /// suppression du contenu déjà existant dans la div gallery ///
         gallery.innerHTML = "" ;
@@ -13,6 +11,7 @@ fetch('http://localhost:5678/api/works')
 
         /// création des éléments de gallery pour chaque travaux /// 
         projects.forEach(element => {
+           
             const figure = document.createElement('figure');
             const img = document.createElement('img');
             const figcaption = document.createElement('figcaption');
@@ -28,20 +27,30 @@ fetch('http://localhost:5678/api/works')
             /// attribution de figure à son élément parent : gallery ///
             gallery.appendChild(figure);
             
-        });
+    });
+}
+
+function loadProjects() {
+    fetch('http://localhost:5678/api/works')
+    .then(response => response.json())
+    .then(projects => {
+
+        showProjects(projects);
+        
     })
     .catch((erreur) => console.log('Erreur : ' + erreur));
+}
 
 
 
 
-///\\\\\\\\\\\\\\\\ BOUTONS FILTRES ///////////////////
-/// Récupération de l'API pour les filtres ///
-fetch('http://localhost:5678/api/works/')
+function filterProjects() {
+    /// Récupération de l'API pour les filtres ///
+    fetch('http://localhost:5678/api/works/')
     .then(result => result.json())
     .then(categories => {
 
-/// Sélection du bouton tous ////
+    /// Sélection du bouton tous ////
         const boutonTous = document.querySelector(".bouton-tous");
             /// Au clique du bouton tous, retourne les éléments de toutes les catégories ////
         boutonTous.addEventListener("click", function () {
@@ -52,29 +61,7 @@ fetch('http://localhost:5678/api/works/')
             console.log(travauxTous)
 
 
-            ///Sélection de la div gallery ///
-            const gallery = document.querySelector('.gallery');
-            /// suppression du contenu déjà existant dans la div gallery ///
-            gallery.innerHTML="";
-            /// parcours du tableau contenant tous les éléments ///
-            travauxTous.forEach(data => {
-            /// création des éléments de gallery pour chaque travaux /// 
-                const figure = document.createElement('figure');
-                const img = document.createElement('img');
-                const figcaption = document.createElement('figcaption');
-
-                /// attribution à chaque élément, l'image et le titre ///
-                img.src = data.imageUrl;
-                img.alt = data.title;
-                figcaption.textContent = data.title;
-
-                /// attribution de l'image et de figcaption à son élément parent : figure ///
-                figure.appendChild(img);
-                figure.appendChild(figcaption);
-                /// attribution de figure à son élément parent : gallery ///
-                gallery.appendChild(figure);
-
-            })
+            showProjects(travauxTous);
             
         })
 
@@ -87,7 +74,7 @@ fetch('http://localhost:5678/api/works/')
             });
             /// affiche à la console, les éléments de la catégorie objet  ///
             console.log(travauxObjets)
-             ///Sélection de la div gallery ///
+            ///Sélection de la div gallery ///
             const gallery = document.querySelector('.gallery');
             /// suppression du contenu déjà existant dans la div gallery ///
             gallery.innerHTML="";
@@ -174,6 +161,12 @@ fetch('http://localhost:5678/api/works/')
             })
             });
         })
+
+
+}
+
+///\\\\\\\\\\\\\\\\ BOUTONS FILTRES ///////////////////
+
     
 /// fonction qui ajoute les modifications à la page d'accueil après connexion réussie ///
 function editsAfterLogin () {
@@ -184,7 +177,7 @@ function editsAfterLogin () {
     }
 }
 
-editsAfterLogin ();
+
 
 
 function edits () {
@@ -233,17 +226,11 @@ function edits () {
         modifyUnderIntro.setAttribute('id','container-intro');
         getIntro.appendChild(modifyUnderIntro);
    
-        const iconUnderIntro = document.createElement("i");
-        iconUnderIntro.innerHTML = '<i class="fa-regular fa-pen-to-square"></i>'
-        iconUnderIntro.setAttribute('id','icon-edit');
-        modifyUnderIntro.appendChild(iconUnderIntro);
+        let linkIntro = createLinkUpdate();
 
-        const firstModify = document.createElement("p");
-        const firstModifyText = document.createTextNode("modifier");
-        firstModify.setAttribute('id','first-modify');
-        firstModify.appendChild(firstModifyText);
-        modifyUnderIntro.appendChild(firstModify);
+        modifyUnderIntro.append(linkIntro);
 
+        
         /// Masquer les boutons filtres ///
         const hideBoutons = document.getElementById("boutons");
         hideBoutons.style.display ='none';
@@ -255,9 +242,8 @@ function edits () {
         getContainerProjects.append(modifyNextToProject);
         modifyNextToProject.appendChild(getProjectTitle)
 
-        const iconNextToProject = document.createElement("i");
-        iconNextToProject.innerHTML = '<i class="fa-regular fa-pen-to-square"></i>'
-        iconNextToProject.setAttribute('id','icon-edit-project');
+  
+       /* const iconNextToProject = createIcone('icon-edit-project', [ "fa-pen-to-square"]);
         modifyNextToProject.append(iconNextToProject);
 
         const secondModify = document.createElement("button");
@@ -266,10 +252,16 @@ function edits () {
         ///secondModify.setAttribute('href','#modal');
         secondModify.appendChild(secondModifyText);
         ///secondModify.href = "#modal";
-        modifyNextToProject.appendChild(secondModify);
+        modifyNextToProject.appendChild(secondModify);*/
+
+        let linkNextToProject = createLinkUpdate();
+        linkNextToProject.setAttribute('id','second-modify');
+        modifyNextToProject.appendChild(linkNextToProject);
 
         hideBoutons.before(modifyNextToProject);
     }
+
+
 
 
 function addModalElements () {
@@ -295,9 +287,8 @@ function addModalElements () {
             img.src = element.imageUrl;
             img.alt = element.title;
 
-            const iconTrash = document.createElement("i");
-            iconTrash.innerHTML = '<i class="fa-regular fa-trash-can"></i>'
-            iconTrash.setAttribute('id','icon-modal');
+            const iconTrash = createIcone( 'icon-modal', [ "fa-trash-can"]);
+            iconTrash.addEventListener("click", deleteProduct);
             figure.appendChild(iconTrash);
 
             const edition = document.createElement("p");
@@ -317,7 +308,10 @@ function addModalElements () {
     .catch((erreur) => console.log('Erreur : ' + erreur));
 }
 
-addModalElements();
+
+function deleteProduct() {
+    console.log("click delete product");
+}
 
 function showModal () {
     const getModal = document.getElementById('modal');
@@ -330,7 +324,7 @@ function showModal () {
     getModal.querySelector('.modal-wrapper').addEventListener('click', Propagation)
 }
 
-showModal();
+
 
 function closeModal () {
     const getModal = document.getElementById('modal');
