@@ -1,9 +1,10 @@
 
 
-window.addEventListener('load', (event) => {
+window.addEventListener('load', () => {
     loadProjects()
     editsAfterLogin ();
     addModalElements();
     showModal();
-    closeModal();
+    filterProjects();
+    ///closeModal();
 });

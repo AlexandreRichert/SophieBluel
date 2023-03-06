@@ -1,6 +1,4 @@
-/// \\\\\\\\\Récupération de tous les travaux de l'API ///
-
-
+/// Récupér \\\\
 
 function showProjects(projects) {
     const gallery = document.querySelector('.gallery');
@@ -43,6 +41,7 @@ function loadProjects() {
 
 
 
+///\\\\\\\\\\\\\\\\ BOUTONS FILTRES ///////////////////
 
 function filterProjects() {
     /// Récupération de l'API pour les filtres ///
@@ -59,10 +58,7 @@ function filterProjects() {
             });
             /// affiche à la console, les éléments de toutes les catégories (pas nécessaire) ///
             console.log(travauxTous)
-
-
             showProjects(travauxTous);
-            
         })
 
         /// Sélection du bouton objets ////
@@ -74,31 +70,9 @@ function filterProjects() {
             });
             /// affiche à la console, les éléments de la catégorie objet  ///
             console.log(travauxObjets)
-            ///Sélection de la div gallery ///
-            const gallery = document.querySelector('.gallery');
-            /// suppression du contenu déjà existant dans la div gallery ///
-            gallery.innerHTML="";
-            /// parcours du tableau contenant les objets filtrés ///
-            travauxObjets.forEach(data => {
-
-                const figure = document.createElement('figure');
-                const img = document.createElement('img');
-                const figcaption = document.createElement('figcaption');
-
-                /// attribution à chaque élément, l'image et le titre ///
-                img.src = data.imageUrl;
-                img.alt = data.title;
-                figcaption.textContent = data.title;
-
-                /// attribution de l'image et de figcaption à son élément parent : figure ///
-                figure.appendChild(img);
-                figure.appendChild(figcaption);
-                /// attribution de figure à son élément parent : gallery ///
-                gallery.appendChild(figure);
-
+            showProjects(travauxObjets);
             })
-            });
-        /// Sélection du bouton appartements ////
+
         const boutonsAppartements = document.querySelector(".bouton-appartements");
         /// Au clique du bouton appartements, retourne les éléments de la catégorie appt ////
         boutonsAppartements.addEventListener("click", function () {
@@ -107,65 +81,24 @@ function filterProjects() {
             });
             /// affiche à la console, les éléments de la catégorie appt  ///
             console.log(travauxAppartements)
-            ///Sélection de la div gallery ///
-            const gallery = document.querySelector('.gallery');
-            /// suppression du contenu déjà existant dans la div gallery ///
-            gallery.innerHTML="";
-            /// parcours du tableau contenant les appt filtrés ///
-            travauxAppartements.forEach(data => {
-
-                const figure = document.createElement('figure');
-                const img = document.createElement('img');
-                const figcaption = document.createElement('figcaption');
-
-                /// attribution à chaque élément, l'image et le titre ///
-                img.src = data.imageUrl;
-                img.alt = data.title;
-                figcaption.textContent = data.title;
-
-                /// attribution de l'image et de figcaption à son élément parent : figure ///
-                figure.appendChild(img);
-                figure.appendChild(figcaption);
-                /// attribution de figure à son élément parent : gallery ///
-                gallery.appendChild(figure);
-
-            })
+            showProjects(travauxAppartements);
             });
-
+        
         const boutonsHotel = document.querySelector(".bouton-hotel");
-
         boutonsHotel.addEventListener("click", function () {
             const travauxHotel = categories.filter(function (travaux) {
                 return travaux.categoryId === 3;
             });
             console.log(travauxHotel)
-            const gallery = document.querySelector('.gallery');
-            gallery.innerHTML="";
-            travauxHotel.forEach(data => {
+            showProjects(travauxHotel);
+        });
+        });
+        }
 
-                const figure = document.createElement('figure');
-                const img = document.createElement('img');
-                const figcaption = document.createElement('figcaption');
-
-                /// attribution à chaque élément, l'image et le titre ///
-                img.src = data.imageUrl;
-                img.alt = data.title;
-                figcaption.textContent = data.title;
-
-                /// attribution de l'image et de figcaption à son élément parent : figure ///
-                figure.appendChild(img);
-                figure.appendChild(figcaption);
-                /// attribution de figure à son élément parent : gallery ///
-                gallery.appendChild(figure);
-
-            })
-            });
-        })
+filterProjects();
 
 
-}
 
-///\\\\\\\\\\\\\\\\ BOUTONS FILTRES ///////////////////
 
     
 /// fonction qui ajoute les modifications à la page d'accueil après connexion réussie ///
@@ -187,18 +120,16 @@ function edits () {
         /// création d'une div regroupant les éléments de la bande noire///
         const element = document.getElementById("body");
         const header = document.getElementById("header");
-        const containerEdits = document.createElement("div");
-        containerEdits.setAttribute('id','container-edits');
+        const containerEdits = createElement("div", "container-edits");
+        ///containerEdits.setAttribute('id','container-edits');
         /// insertion de cette div au dessus du header ///
         element.insertBefore(containerEdits,header);
 
 
         /// création de l'icône d'édition ///
-        const icon = document.createElement("i");
-        icon.innerHTML = '<i class="fa-regular fa-pen-to-square"></i>'
-        icon.setAttribute('id','icon-edit');
+        const iconHeader = createIcone( 'icon-edit', [ "fa-pen-to-square"]);
         /// insertion de cette icône dans la div créée précédemment///
-        containerEdits.appendChild(icon);
+        containerEdits.appendChild(iconHeader);
 
         /// création du texte "Mode édition" ///
         const editionMode = document.createElement("p");
@@ -324,20 +255,15 @@ function showModal () {
     getModal.querySelector('.modal-wrapper').addEventListener('click', Propagation)
 }
 
-
-
 function closeModal () {
     const getModal = document.getElementById('modal');
     getModal.style.display ='none';
    
 }
 
-
 function Propagation (e){
     e.stopPropagation()
 }
-
-closeModal();
 
 window.addEventListener('click', e => {
     console.log(e.target)
