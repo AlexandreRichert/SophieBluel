@@ -360,7 +360,7 @@ footer nav ul {
 	position: relative;
 }
 
-#image-modal {
+[id^=image-modal] {
 	width: 80px;
 	height: 105px;
 	object-fit: cover;
@@ -368,7 +368,7 @@ footer nav ul {
 	z-index: 0;
 }
 
-#icon-modal {
+[id^=icon-modal] {
 	position: absolute;
 	z-index: 1;
 	margin-top: 4px;

@@ -132,18 +132,12 @@ function edits () {
         containerEdits.appendChild(iconHeader);
 
         /// création du texte "Mode édition" ///
-        const editionMode = document.createElement("p");
-        const editionModeText = document.createTextNode("Mode édition");
-        editionMode.setAttribute('id','edition-mode');
-        editionMode.appendChild(editionModeText);
+        const editionMode = createSpan("Mode édition", 'edition-mode');
         ///insertion de ce texte dans la div créée précédemment///
         containerEdits.appendChild(editionMode);
 
         /// création du texte "publier les changements" ///
-        const publishChanges = document.createElement("p");
-        const publishChangesText = document.createTextNode("publier les changements");
-        publishChanges.setAttribute('id','publish-changes');
-        publishChanges.appendChild(publishChangesText);
+        const publishChanges = createSpan("publier les changements", 'publish-changes');
         ///insertion de ce texte dans la div créée précédemment///
         containerEdits.appendChild(publishChanges);
         
@@ -153,8 +147,7 @@ function edits () {
         
         /// création d'une div en dessous de l'image de présentation ///
         const getIntro = document.getElementById("figure");
-        const modifyUnderIntro = document.createElement("div");
-        modifyUnderIntro.setAttribute('id','container-intro');
+        const modifyUnderIntro = createElement("div",'container-intro');
         getIntro.appendChild(modifyUnderIntro);
    
         let linkIntro = createLinkUpdate();
@@ -168,8 +161,7 @@ function edits () {
 
         const getContainerProjects = document.getElementById("portfolio")
         const getProjectTitle = document.getElementById("mes-projets");
-        const modifyNextToProject = document.createElement("div");
-        modifyNextToProject.setAttribute('id','container-projects');
+        const modifyNextToProject = createElement("div",'container-projects');
         getContainerProjects.append(modifyNextToProject);
         modifyNextToProject.appendChild(getProjectTitle)
 
@@ -212,14 +204,13 @@ function addModalElements () {
         projects.forEach(element => {
             const figure = document.createElement('figure');
             figure.setAttribute('id','figure-modal');
-            const img = document.createElement('img');
-            img.setAttribute('id','image-modal');
+            const img = createElement('img', 'image-modal ' + element.id);
             /// attribution à chaque élément, l'image et le titre ///
             img.src = element.imageUrl;
             img.alt = element.title;
 
-            const iconTrash = createIcone( 'icon-modal', [ "fa-trash-can"]);
-            iconTrash.addEventListener("click", deleteProduct);
+            const iconTrash = createIcone( 'icon-modal ' + element.id, [ "fa-trash-can"]);
+            iconTrash.addEventListener("click", deleteProduct(element.id));
             figure.appendChild(iconTrash);
 
             const edition = document.createElement("p");
@@ -240,8 +231,18 @@ function addModalElements () {
 }
 
 
-function deleteProduct() {
+function deleteProduct(idWork) {
+
     console.log("click delete product");
+    fetch(`http://localhost:5678/api/works/${idWork}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            "authorization": `Bearer ${sessionStorage.getItem('token')}`
+        }
+        
+    });
+    console.log(idWork);
 }
 
 function showModal () {
