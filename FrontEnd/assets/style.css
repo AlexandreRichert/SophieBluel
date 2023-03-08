@@ -368,7 +368,7 @@ footer nav ul {
 	z-index: 0;
 }
 
-[id^=icon-modal] {
+.fa-trash-can {
 	position: absolute;
 	z-index: 1;
 	margin-top: 4px;

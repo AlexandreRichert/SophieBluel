@@ -209,8 +209,8 @@ function addModalElements () {
             img.src = element.imageUrl;
             img.alt = element.title;
 
-            const iconTrash = createIcone( 'icon-modal ' + element.id, [ "fa-trash-can"]);
-            iconTrash.addEventListener("click", deleteProduct(element.id));
+            const iconTrash = createIcone( element.id, [ "fa-trash-can"]);
+            iconTrash.setAttribute("onclick", "deleteProduct(this.id)");
             figure.appendChild(iconTrash);
 
             const edition = document.createElement("p");
