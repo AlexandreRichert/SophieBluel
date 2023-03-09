@@ -202,8 +202,7 @@ function addModalElements () {
 
         /// création des éléments de gallery pour chaque travaux /// 
         projects.forEach(element => {
-            const figure = document.createElement('figure');
-            figure.setAttribute('id','figure-modal');
+            const figure = createElement('figure', 'figure-modal ' + element.id);
             const img = createElement('img', 'image-modal ' + element.id);
             /// attribution à chaque élément, l'image et le titre ///
             img.src = element.imageUrl;
@@ -241,8 +240,15 @@ function deleteProduct(idWork) {
             "authorization": `Bearer ${sessionStorage.getItem('token')}`
         }
         
-    });
-    console.log(idWork);
+    })
+    .then(function(response){
+        if (response.status === 200) {
+            let getFigure = document.getElementById("image-modal " + idWork);
+            getFigure.remove
+        }
+    })
+    
+    .then(json => console.log(json));
 }
 
 function showModal () {

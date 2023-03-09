@@ -352,7 +352,7 @@ footer nav ul {
 	flex-wrap: wrap;
 }
 
-#figure-modal {
+[id^=figure-modal] {
 	margin-left: 10px;
 	margin-top: 25px;
 	display: flex;
@@ -382,7 +382,7 @@ footer nav ul {
 	font-size: 12px;
 }
 
-#figure-modal p {
+[id^=figure-modal] p {
 	position: absolute;
 	z-index: 1;
 	margin-top: 107px;
