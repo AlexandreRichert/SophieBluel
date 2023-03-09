@@ -230,25 +230,22 @@ function addModalElements () {
 }
 
 
-function deleteProduct(idWork) {
+async function deleteProduct(idWork) {
 
     console.log("click delete product");
-    fetch(`http://localhost:5678/api/works/${idWork}`, {
+    const res= await fetch(`http://localhost:5678/api/works/${idWork}`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json; charset=utf-8",
             "authorization": `Bearer ${sessionStorage.getItem('token')}`
         }
         
-    })
-    .then(function(response){
-        if (response.status === 200) {
-            let getFigure = document.getElementById("image-modal " + idWork);
-            getFigure.remove
-        }
-    })
+    });
+    if(res.status == 204) {
+        let getFigure = document.getElementById('figure-modal ' + idWork);
+        getFigure.remove();
+    }
     
-    .then(json => console.log(json));
 }
 
 function showModal () {
