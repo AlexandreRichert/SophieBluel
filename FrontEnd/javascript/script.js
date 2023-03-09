@@ -10,7 +10,7 @@ function showProjects(projects) {
         /// création des éléments de gallery pour chaque travaux /// 
         projects.forEach(element => {
            
-            const figure = document.createElement('figure');
+            const figure = createElement('figure', 'figure ' + element.id);
             const img = document.createElement('img');
             const figcaption = document.createElement('figcaption');
 
@@ -38,7 +38,6 @@ function loadProjects() {
     })
     .catch((erreur) => console.log('Erreur : ' + erreur));
 }
-
 
 
 ///\\\\\\\\\\\\\\\\ BOUTONS FILTRES ///////////////////
@@ -185,8 +184,6 @@ function edits () {
     }
 
 
-
-
 function addModalElements () {
     fetch('http://localhost:5678/api/works')
     .then(response => response.json())
@@ -194,12 +191,6 @@ function addModalElements () {
 
 
         const getContainerImages = document.querySelector('.container-images');
-        const getEdition = document.querySelector('.edition');
-
-
-        /// suppression du contenu déjà existant dans la div gallery ///
-
-
         /// création des éléments de gallery pour chaque travaux /// 
         projects.forEach(element => {
             const figure = createElement('figure', 'figure-modal ' + element.id);
@@ -212,10 +203,7 @@ function addModalElements () {
             iconTrash.setAttribute("onclick", "deleteProduct(this.id)");
             figure.appendChild(iconTrash);
 
-            const edition = document.createElement("p");
-            const editionText = document.createTextNode("éditer");
-            edition.setAttribute('id','editer');
-            edition.appendChild(editionText);
+            const edition = createSpan("éditer","editer");
             figure.appendChild(edition);
             
 
@@ -242,21 +230,23 @@ async function deleteProduct(idWork) {
         
     });
     if(res.status == 204) {
-        let getFigure = document.getElementById('figure-modal ' + idWork);
-        getFigure.remove();
+        let getFigureModal = document.getElementById('figure-modal ' + idWork);
+        getFigureModal.remove();
+        let getFigurePortfolio = document.getElementById('figure ' + idWork);
+        getFigurePortfolio.remove();
     }
     
 }
 
-function showModal () {
-    const getModal = document.getElementById('modal');
-    const btnModify = document.getElementById('second-modify');
+function showModal (modal, button, cross, wrapper) {
+    const getModal = document.getElementById(modal);
+    const btnModify = document.getElementById(button);
     btnModify.addEventListener("click", function () {
         getModal.style.display ='flex';
 })
     getModal.addEventListener("click", closeModal)
-    getModal.querySelector('#cross-mark').addEventListener('click', closeModal)
-    getModal.querySelector('.modal-wrapper').addEventListener('click', Propagation)
+    getModal.querySelector(cross).addEventListener('click', closeModal)
+    getModal.querySelector(wrapper).addEventListener('click', Propagation)
 }
 
 function closeModal () {
@@ -272,3 +262,11 @@ function Propagation (e){
 window.addEventListener('click', e => {
     console.log(e.target)
 })
+
+function changeModal() {
+    document.querySelector('.modal-wrapper').style.display='none';
+    document.querySelector('.modal-form').style.display='flex';
+}
+
+let getButtonAddImage = document.querySelector('.add-image');
+getButtonAddImage.addEventListener('click',changeModal)

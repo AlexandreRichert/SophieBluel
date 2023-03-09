@@ -4,7 +4,7 @@ window.addEventListener('load', () => {
     loadProjects()
     editsAfterLogin ();
     addModalElements();
-    showModal();
+    showModal('modal', 'second-modify', '#cross-mark', '.modal-wrapper');
     filterProjects();
     ///closeModal();
 });

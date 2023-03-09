@@ -309,6 +309,8 @@ footer nav ul {
 	align-items: center;
 }
 
+
+
 .xmark {
 	display: flex;
 	justify-content: flex-end;
@@ -382,7 +384,7 @@ footer nav ul {
 	font-size: 12px;
 }
 
-[id^=figure-modal] p {
+[id^=figure-modal] span {
 	position: absolute;
 	z-index: 1;
 	margin-top: 107px;
@@ -417,4 +419,17 @@ footer nav ul {
 	font-family: 'Syne', sans-serif;
 	font-weight: 400;
 	font-size: 14px;
+}
+
+.modal-form {
+	display: none;
+	width: 630px;
+	height: 670px;
+	background: #FFFFFF;
+	flex-direction: column;
+}
+
+.buttons-header {
+	display: flex;
+	justify-content: space-between;
 }
