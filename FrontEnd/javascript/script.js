@@ -263,10 +263,19 @@ window.addEventListener('click', e => {
     console.log(e.target)
 })
 
-function changeModal() {
-    document.querySelector('.modal-wrapper').style.display='none';
-    document.querySelector('.modal-form').style.display='flex';
+function changeModal(display1, display2) {
+    document.querySelector('.modal-wrapper').style.display=display1;
+    document.querySelector('.modal-form').style.display=display2;
+
 }
 
 let getButtonAddImage = document.querySelector('.add-image');
-getButtonAddImage.addEventListener('click',changeModal)
+getButtonAddImage.addEventListener('click',() => {    
+    changeModal('none','flex');
+    showModal('modal', 'add-image', '#cross', '.modal-form');    
+});
+
+let getArrowLeft = document.querySelector('.fa-arrow-left-long');
+getArrowLeft.addEventListener('click',() => {    
+    changeModal('flex','none');
+});
