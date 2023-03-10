@@ -39,7 +39,26 @@
 			<button id="arrow-left"><i class="fa-solid fa-arrow-left-long"></i></button>
 			<button id="cross"><i class="fa-solid fa-xmark"></i></button>
 		</div>
-		<h1>Ajout photo</h1>
+		
+		<form action="" class="add-work-form" method="post">
+			<h1>Ajout photo</h1>
+			<label for="input-tag">
+				<button class="add-work-image">+ Ajouter une photo</button>
+				<input type="file" class="input-file">
+			</label>
+			<label for="Titre" >Titre</label>
+			<input type="text">
+			<label for="Catégories" >Catégories</label>
+			<select name="Catégories" id="Catégories">
+				<option value="espagne">Hôtel & restaurants</option>
+				<option value="royaume-uni">Objets</option>
+				<option value="canada">Appartements</option>
+			</select>
+		</form>
+		<div class="container-modal-line">
+			<div class="modal-line"></div>
+		</div>
+		<button class="add-work-button">Valider</button>
 	</div>
 </aside>
 <header id="header">
@@ -69,16 +88,16 @@
 	<section id="portfolio">
 		<h2 id="mes-projets">Mes Projets</h2>
 		<div class="boutons" id="boutons">
-			<button class="bouton-tous">
+			<button class="bouton-tous" data-id="0">
 				Tous
 			</button>
-			<button class="bouton-objets">
+			<button class="bouton-objets" data-id="1">
 				Objets
 			</button>
-			<button class="bouton-appartements">
+			<button class="bouton-appartements"  data-id="2">
 				Appartements
 			</button>
-			<button class="bouton-hotel">
+			<button class="bouton-hotel"  data-id="3">
 				Hôtels & restaurants
 			</button>
 		</div>

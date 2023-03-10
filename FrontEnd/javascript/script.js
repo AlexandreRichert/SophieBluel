@@ -28,31 +28,44 @@ function showProjects(projects) {
     });
 }
 
-function loadProjects() {
-    fetch('http://localhost:5678/api/works')
-    .then(response => response.json())
-    .then(projects => {
-
-        showProjects(projects);
-        
-    })
-    .catch((erreur) => console.log('Erreur : ' + erreur));
-}
 
 
 ///\\\\\\\\\\\\\\\\ BOUTONS FILTRES ///////////////////
 
+
+
 function filterProjects() {
-    /// Récupération de l'API pour les filtres ///
-    fetch('http://localhost:5678/api/works/')
-    .then(result => result.json())
-    .then(categories => {
+    console.log("clicke");
+        
+        document.querySelectorAll('.boutons button').forEach(bouton => {
+            bouton.addEventListener('click', event => {
+                console.log("clic bouton");
+                /// Récupération de l'API pour les filtres ///
+                fetch('http://localhost:5678/api/works/')
+                .then(result => result.json())
+                .then(projects => {
+                    const travauxObjets = projects.filter(function (travaux) {
+                        if(event.target.dataset.id >= 1 ) {
+                            
+                            return travaux.categoryId == event.target.dataset.id;
+                        }
+                        else {
+                            return  travaux.categoryId >= 1;
+                        }
+                    }); 
+                
+                    /// affiche à la console, les éléments de la catégorie objet  ///
+                    console.log(travauxObjets)
+                    showProjects(travauxObjets);
+                });
+            })
+          })
 
     /// Sélection du bouton tous ////
-        const boutonTous = document.querySelector(".bouton-tous");
+        /*const boutonTous = document.querySelector(".bouton-tous");
             /// Au clique du bouton tous, retourne les éléments de toutes les catégories ////
         boutonTous.addEventListener("click", function () {
-            const travauxTous = categories.filter(function (travaux) {
+            const travauxTous = projects.filter(function (travaux) {
                 return travaux.categoryId <= 3;
             });
             /// affiche à la console, les éléments de toutes les catégories (pas nécessaire) ///
@@ -64,7 +77,7 @@ function filterProjects() {
         const boutonObjets = document.querySelector(".bouton-objets");
             /// Au clique du bouton objets, retourne les éléments de la catégorie objet ////
         boutonObjets.addEventListener("click", function () {
-            const travauxObjets = categories.filter(function (travaux) {
+            const travauxObjets = projects.filter(function (travaux) {
                 return travaux.categoryId === 1;
             });
             /// affiche à la console, les éléments de la catégorie objet  ///
@@ -75,7 +88,7 @@ function filterProjects() {
         const boutonsAppartements = document.querySelector(".bouton-appartements");
         /// Au clique du bouton appartements, retourne les éléments de la catégorie appt ////
         boutonsAppartements.addEventListener("click", function () {
-            const travauxAppartements = categories.filter(function (travaux) {
+            const travauxAppartements = projects.filter(function (travaux) {
                 return travaux.categoryId === 2;
             });
             /// affiche à la console, les éléments de la catégorie appt  ///
@@ -85,16 +98,16 @@ function filterProjects() {
         
         const boutonsHotel = document.querySelector(".bouton-hotel");
         boutonsHotel.addEventListener("click", function () {
-            const travauxHotel = categories.filter(function (travaux) {
+            const travauxHotel = projects.filter(function (travaux) {
                 return travaux.categoryId === 3;
             });
             console.log(travauxHotel)
             showProjects(travauxHotel);
-        });
-        });
-        }
+        });*/
+       
+}
 
-filterProjects();
+
 
 
 
@@ -241,12 +254,15 @@ async function deleteProduct(idWork) {
 function showModal (modal, button, cross, wrapper) {
     const getModal = document.getElementById(modal);
     const btnModify = document.getElementById(button);
-    btnModify.addEventListener("click", function () {
-        getModal.style.display ='flex';
-})
-    getModal.addEventListener("click", closeModal)
-    getModal.querySelector(cross).addEventListener('click', closeModal)
-    getModal.querySelector(wrapper).addEventListener('click', Propagation)
+    if( btnModify !== null) {
+        btnModify.addEventListener("click", function () {
+            getModal.style.display ='flex';
+        });
+        getModal.addEventListener("click", closeModal)
+        getModal.querySelector(cross).addEventListener('click', closeModal)
+        getModal.querySelector(wrapper).addEventListener('click', Propagation)
+    }
+    
 }
 
 function closeModal () {
@@ -279,3 +295,4 @@ let getArrowLeft = document.querySelector('.fa-arrow-left-long');
 getArrowLeft.addEventListener('click',() => {    
     changeModal('flex','none');
 });
+

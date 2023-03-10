@@ -432,4 +432,35 @@ footer nav ul {
 .buttons-header {
 	display: flex;
 	justify-content: space-between;
+	padding: 10px;
+}
+.buttons-header button {
+	border: none;
+	background: none;
+}
+
+.add-work-form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.add-work-form h1 {
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 26px;
+	color: black;
+}
+
+.container-modal-line {
+	display: flex;
+	justify-content: center;
+}
+
+input[type=file] {
+	overflow: hidden;
+}
+
+input[type=file]::before {
+	content: "szg";
 }
