@@ -1,11 +1,3 @@
-/// Redirection vers page d'accueil quand la connexion est confirmée 
-        ///Methode Post pour envoyer les valeurs entrées
-        ///Window.location pour rediriger vers une autre page
-        ///Si utilisateur === Sophie.Bluel@test.id && mdp === SOphie
-        ///Si authentification réussie, redirection vers page d'accueil
-        ///Si authentification réussie, ajout header modifs
-
-
 
 
 /// Message d'erreur quand utilisateur et/ou mdp incorrect

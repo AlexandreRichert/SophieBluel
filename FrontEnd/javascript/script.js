@@ -1,4 +1,3 @@
-/// Récupér \\\\
 
 function showProjects(projects) {
     const gallery = document.querySelector('.gallery');
@@ -295,4 +294,8 @@ let getArrowLeft = document.querySelector('.fa-arrow-left-long');
 getArrowLeft.addEventListener('click',() => {    
     changeModal('flex','none');
 });
+
+let input = document.getElementById("input-file");
+let imageName = document.getElementById("imageName")
+
 
