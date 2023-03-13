@@ -400,7 +400,7 @@ footer nav ul {
 	width: 420px;
 	height: 0px;
 	margin-top: 50px;
-	border: 1px solid #B3B3B3
+	border-top: 1px solid #B3B3B3
 }
 
 .add-image {
@@ -444,6 +444,10 @@ footer nav ul {
 	background: none;
 }
 
+.buttons-header button i {
+	font-size: 18px;
+}
+
 .add-work-form {
 	display: flex;
 	flex-direction: column;
@@ -455,6 +459,7 @@ footer nav ul {
 	font-weight: 400;
 	font-size: 26px;
 	color: black;
+	padding: 30px;
 }
 
 .container-modal-line {
@@ -466,6 +471,80 @@ input[type=file] {
 	display: none;
 }
 
-input[type=file]::before {
-	content: "szg";
+.add-work-image-button label {
+    background: #CBD6DC;
+    border-radius: 50px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.add-work-image-button {
+	width: 175px;
+	height: 35px;
+}
+
+.add-work-image {
+	background: #E8F1F7;
+    border-radius: 3px;
+    width: 70%;
+    height: 170px;
+    display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-evenly;
+}
+
+.add-work-image i {
+	color: #B9C5CC;
+	font-size: 60px;
+	height: 45px;
+
+}
+
+.add-work-image span {
+	color: #444444;
+	font-style: normal;
+	font-weight: 400;
+	font-size: 10px;
+	margin-top: -15px;
+}
+
+.add-work-information {
+	width: 70%;
+	display: flex;
+	flex-direction: column;
+	margin-top: 30px;
+}
+
+.form-fields {
+	background: #FFFFFF;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	border-style: hidden;
+	height: 35px;
+	outline: none;
+	margin-bottom: 10px;
+}
+
+.add-work-information >* {
+	margin-top: 10px;
+}
+
+.add-work-button {
+	width: 237px;
+	height: 36px;
+	background: #A7A7A7;
+	border-radius: 60px;
+	border: none;
+	align-self: center;
+    color: white;
+    font-family: 'Syne';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    margin-top: 30px;
 }

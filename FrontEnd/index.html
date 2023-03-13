@@ -56,20 +56,25 @@
 			</select>
 		</form>-->
 		<form method="post" enctype="multipart/form-data" class="add-work-form">
+			<h2>Ajout photo</h2>
 			<div class="add-work-image">
+				<i class="fa-regular fa-image"></i>
 				<div class="add-work-image-button">
 				<label for="image_uploads">+ Ajouter une photo</label>
 				<input type="file" id="image_uploads" name="image_uploads" accept=".jpg, .jpeg, .png" multiple>
 				</div>
+				<span>jpg, png : 4mo max</span>
 			</div>
-			<label for="Titre" >Titre</label>
-			<input type="text">
-			<label for="Catégories" >Catégories</label>
-			<select name="Catégories" id="Catégories">
-				<option value="espagne">Hôtel & restaurants</option>
-				<option value="royaume-uni">Objets</option>
-				<option value="canada">Appartements</option>
-			</select>
+			<div class="add-work-information">
+				<label for="Titre" >Titre</label>
+				<input type="text" class="form-fields">
+				<label for="Catégories" >Catégories</label>
+				<select name="Catégories" id="Catégories" class="form-fields">
+					<option value="espagne">Hôtel & restaurants</option>
+					<option value="royaume-uni">Objets</option>
+					<option value="canada">Appartements</option>
+				</select>
+			</div>
 		  </form>
 		  
 		<div class="container-modal-line">
