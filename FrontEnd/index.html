@@ -40,21 +40,6 @@
 			<button id="cross"><i class="fa-solid fa-xmark"></i></button>
 		</div>
 		
-		<!--<form action="" class="add-work-form" method="post">
-			<h2>Ajout photo</h2>
-			<label for="input-tag">
-				<button class="add-work-image">+ Ajouter une photo</button>
-				<input type="file" id="input-file">
-			</label>
-			<label for="Titre" >Titre</label>
-			<input type="text">
-			<label for="Catégories" >Catégories</label>
-			<select name="Catégories" id="Catégories">
-				<option value="espagne">Hôtel & restaurants</option>
-				<option value="royaume-uni">Objets</option>
-				<option value="canada">Appartements</option>
-			</select>
-		</form>-->
 		<form method="post" enctype="multipart/form-data" class="add-work-form">
 			<h2>Ajout photo</h2>
 			<div class="add-work-image">
@@ -66,21 +51,22 @@
 				<span>jpg, png : 4mo max</span>
 			</div>
 			<div class="add-work-information">
-				<label for="Titre" >Titre</label>
-				<input type="text" class="form-fields">
+				<label for="titre" >Titre</label>
+				<input type="text" class="form-fields" name="titre">
 				<label for="Catégories" >Catégories</label>
-				<select name="Catégories" id="Catégories" class="form-fields">
-					<option value="espagne">Hôtel & restaurants</option>
-					<option value="royaume-uni">Objets</option>
-					<option value="canada">Appartements</option>
+				<select name="categories" id="Catégories" class="form-fields">
+					<option value="Hôtel & restaurants">Hôtel & restaurants</option>
+					<option value="Objets">Objets</option>
+					<option value="Appartements">Appartements</option>
 				</select>
 			</div>
+			<div class="container-modal-line">
+				<div class="modal-line"></div>
+			</div>
+			<button type="submit" class="add-work-button">Valider</button>
 		  </form>
 		  
-		<div class="container-modal-line">
-			<div class="modal-line"></div>
-		</div>
-		<button class="add-work-button">Valider</button>
+		
 	</div>
 </aside>
 <header id="header">

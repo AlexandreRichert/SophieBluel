@@ -299,3 +299,36 @@ let input = document.getElementById("input-file");
 let imageName = document.getElementById("imageName")
 
 
+function loginAddWork () {
+
+    const form = document.querySelector('.add-work-form');
+    console.log(form);
+
+    const token = sessionStorage.getItem('token');
+    console.log(token);
+
+    form.addEventListener('submit',event => {
+        event.preventDefault();
+
+        let formData = new FormData(form);
+        const photo = document.querySelector('input[type="file"]').files[0];
+        formData.append('photo',photo);
+
+        for (item of formData) {
+            console.log(item[0],item[1]);
+        }
+        
+        fetch ('http://localhost:5678/api/works', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'accept': 'application/json',
+            },
+            body: formData,
+        })  
+        .then(res => console.log(res));
+        
+    });
+}
+
+loginAddWork();
