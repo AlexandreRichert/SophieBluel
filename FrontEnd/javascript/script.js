@@ -1,4 +1,4 @@
-
+/// fonction d'affichage des projets ///
 function showProjects(projects) {
     const gallery = document.querySelector('.gallery');
 
@@ -31,14 +31,10 @@ function showProjects(projects) {
 
 ///\\\\\\\\\\\\\\\\ BOUTONS FILTRES ///////////////////
 
-
-
 function filterProjects() {
-    console.log("clicke");
         
         document.querySelectorAll('.boutons button').forEach(bouton => {
             bouton.addEventListener('click', event => {
-                console.log("clic bouton");
                 /// Récupération de l'API pour les filtres ///
                 fetch('http://localhost:5678/api/works/')
                 .then(result => result.json())
@@ -54,7 +50,6 @@ function filterProjects() {
                     }); 
                 
                     /// affiche à la console, les éléments de la catégorie objet  ///
-                    console.log(travauxObjets)
                     showProjects(travauxObjets);
                 });
             })
@@ -105,14 +100,8 @@ function filterProjects() {
         });*/
        
 }
-
-
-
-
-
-
     
-/// fonction qui ajoute les modifications à la page d'accueil après connexion réussie ///
+/// fonction qui ajoute les edits à la page d'accueil après connexion réussie ///
 function editsAfterLogin () {
     ///récupération du token stocké
     var token = sessionStorage.getItem('token');
@@ -120,9 +109,6 @@ function editsAfterLogin () {
         edits();
     }
 }
-
-
-
 
 function edits () {
 
@@ -162,7 +148,6 @@ function edits () {
         getIntro.appendChild(modifyUnderIntro);
    
         let linkIntro = createLinkUpdate();
-
         modifyUnderIntro.append(linkIntro);
 
         
@@ -176,17 +161,6 @@ function edits () {
         getContainerProjects.append(modifyNextToProject);
         modifyNextToProject.appendChild(getProjectTitle)
 
-  
-       /* const iconNextToProject = createIcone('icon-edit-project', [ "fa-pen-to-square"]);
-        modifyNextToProject.append(iconNextToProject);
-
-        const secondModify = document.createElement("button");
-        const secondModifyText = document.createTextNode("modifier");
-        secondModify.setAttribute('id','second-modify');
-        ///secondModify.setAttribute('href','#modal');
-        secondModify.appendChild(secondModifyText);
-        ///secondModify.href = "#modal";
-        modifyNextToProject.appendChild(secondModify);*/
 
         let linkNextToProject = createLinkUpdate();
         linkNextToProject.setAttribute('id','second-modify');
@@ -195,7 +169,7 @@ function edits () {
         hideBoutons.before(modifyNextToProject);
     }
 
-
+/// fonction d'ajout des éléments à l'intérieur de la modale ///
 function addModalElements () {
     fetch('http://localhost:5678/api/works')
     .then(response => response.json())
@@ -229,10 +203,9 @@ function addModalElements () {
     .catch((erreur) => console.log('Erreur : ' + erreur));
 }
 
-
+/// fonction permettant la suppression d'un travaux au clique de l'icone de suppression ///
 async function deleteProduct(idWork) {
 
-    console.log("click delete product");
     const res= await fetch(`http://localhost:5678/api/works/${idWork}`, {
         method: "DELETE",
         headers: {
@@ -250,6 +223,11 @@ async function deleteProduct(idWork) {
     
 }
 
+/// focntion permettant d'afficher la modale sélectionnée ///
+/// modal = container aside de toutes les modales ///
+/// button = lorsque l'on clique sur button, la fonction s'exécute///
+/// cross = la croix de fermeture de modale ///
+/// wrapper = wrapper de la modale permettant le clique à l'extérieur de cette dernière pour la fermer /// 
 function showModal (modal, button, cross, wrapper) {
     const getModal = document.getElementById(modal);
     const btnModify = document.getElementById(button);
@@ -263,72 +241,93 @@ function showModal (modal, button, cross, wrapper) {
     }
     
 }
-
+/// fonction qui ferme le aside modale ///
 function closeModal () {
     const getModal = document.getElementById('modal');
     getModal.style.display ='none';
    
 }
 
+///fonction empêchant aux modales la fermeture de la modale au clique à l'intérieur de la modale ///
 function Propagation (e){
     e.stopPropagation()
 }
 
-window.addEventListener('click', e => {
-    console.log(e.target)
-})
-
+///fonction permettant de changer les displays des modales ///
 function changeModal(display1, display2) {
     document.querySelector('.modal-wrapper').style.display=display1;
     document.querySelector('.modal-form').style.display=display2;
 
 }
 
+/// Au clique du bouton d'ajout de photo, fonctions changeModal et showModal s'appliquent ///
 let getButtonAddImage = document.querySelector('.add-image');
 getButtonAddImage.addEventListener('click',() => {    
+    /// disparition de la modale de présentation des modales et affichage de la modale du formulaire d'ajout de travaux///
     changeModal('none','flex');
     showModal('modal', 'add-image', '#cross', '.modal-form');    
 });
 
+/// Au clique sur la flèche gauche de la 2nde modale, la 1ère s'affiche à nouveau ///
 let getArrowLeft = document.querySelector('.fa-arrow-left-long');
 getArrowLeft.addEventListener('click',() => {    
     changeModal('flex','none');
 });
 
-let input = document.getElementById("input-file");
-let imageName = document.getElementById("imageName")
 
 
-function loginAddWork () {
 
+///Affichage de l'image dans le formulaire après avoir l'avoir sélectionnée ///
+var input = document.querySelector('input[type="file"]');
+
+input.addEventListener('change', function(event) {
+  /// Récupérer le fichier sélectionné par l'utilisateur
+  var file = event.target.files[0];
+  var reader = new FileReader();
+  reader.onload = function(event) {
+    /// Créer un nouvel élément d'image
+    var img =createElement("img","image-form");
+    /// Définir la source de l'image sur le contenu du fichier
+    img.src = event.target.result;
+    /// récupération du container de la partie image du formulaire ///
+    var container = document.querySelector(".add-work-image");
+    /// Vider la div avant d'y ajouter l'image
+    container.innerHTML = '';
+    /// Ajouter l'image à la div
+    container.appendChild(img);
+  };
+  /// Lire le contenu du fichier en tant que URL de données
+  reader.readAsDataURL(file);
+});
+
+function addWorkElement () {
     const form = document.querySelector('.add-work-form');
-    console.log(form);
+const fileInput = document.getElementById('image_uploads');
+const title = document.getElementById('title');
+const category = document.getElementById('categories');
 
-    const token = sessionStorage.getItem('token');
-    console.log(token);
-
-    form.addEventListener('submit',event => {
-        event.preventDefault();
-
-        let formData = new FormData(form);
-        const photo = document.querySelector('input[type="file"]').files[0];
-        formData.append('photo',photo);
-
-        for (item of formData) {
-            console.log(item[0],item[1]);
-        }
-        
-        fetch ('http://localhost:5678/api/works', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'accept': 'application/json',
-            },
-            body: formData,
-        })  
-        .then(res => console.log(res));
-        
-    });
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  
+  const formData = new FormData();
+  formData.append('title',title.value);
+  formData.append('image', fileInput.files[0]);
+  formData.append('category',category.value);
+  
+  fetch('http://localhost:5678/api/works', {
+    method: 'POST',
+    headers: {
+        'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+    },
+    body: formData
+  })
+  .then(response => {
+    console.log('Téléchargé avec succès');
+  })
+  .catch(error => {
+    console.error('Erreur lors du téléchargement', error);
+  });
+});
 }
 
-loginAddWork();
+addWorkElement();
