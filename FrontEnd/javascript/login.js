@@ -1,8 +1,4 @@
 
-
-/// Message d'erreur quand utilisateur et/ou mdp incorrect
-
-
 async function login () {
 
 

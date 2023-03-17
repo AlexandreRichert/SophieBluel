@@ -219,6 +219,7 @@ async function deleteProduct(idWork) {
         getFigureModal.remove();
         let getFigurePortfolio = document.getElementById('figure ' + idWork);
         getFigurePortfolio.remove();
+
     }
     
 }
@@ -257,6 +258,7 @@ function Propagation (e){
 function changeModal(display1, display2) {
     document.querySelector('.modal-wrapper').style.display=display1;
     document.querySelector('.modal-form').style.display=display2;
+
 
 }
 
@@ -300,34 +302,43 @@ input.addEventListener('change', function(event) {
   reader.readAsDataURL(file);
 });
 
-function addWorkElement () {
+async function addWorkElement () {
+    ///récupération du formulaire ///
     const form = document.querySelector('.add-work-form');
-const fileInput = document.getElementById('image_uploads');
-const title = document.getElementById('title');
-const category = document.getElementById('categories');
+        ///récupération de l'id de l'image du form ///
+    const image = document.getElementById('image_uploads');
+        ///récupération de l'id du titre ///
+    const title = document.getElementById('title');
+        ///récupération de l'id de la catégorie ///
+    const category = document.getElementById('categories');
 
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
-  
-  const formData = new FormData();
-  formData.append('title',title.value);
-  formData.append('image', fileInput.files[0]);
-  formData.append('category',category.value);
-  
-  fetch('http://localhost:5678/api/works', {
-    method: 'POST',
-    headers: {
-        'Authorization': `Bearer ${sessionStorage.getItem('token')}`
-    },
-    body: formData
-  })
-  .then(response => {
-    console.log('Téléchargé avec succès');
-  })
-  .catch(error => {
-    console.error('Erreur lors du téléchargement', error);
-  });
-});
+    ///Au submit du formulaire ///
+    form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    /// Création d'un nouveau formData///
+    const formData = new FormData();
+    ///Attribution de l'input du titre au formData
+    formData.append('title',title.value);
+    ///Attribution de l'input de l'image au formData
+    formData.append('image', image.files[0]);
+    ///Attribution de l'input de la catégorie au formData
+    formData.append('category',category.value);
+    
+    fetch('http://localhost:5678/api/works', {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+        },
+        body: formData
+    })
+    .then(res => {
+        if (res.status>= 200 && res.status <205) {
+            window.location.reload();
+        }
+    })
+    .catch(error => {
+        console.error('Erreur lors du téléchargement', error);
+    });
+    });
 }
-
-addWorkElement();
