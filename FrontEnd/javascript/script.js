@@ -2,27 +2,27 @@
 function showProjects(projects) {
     const gallery = document.querySelector('.gallery');
 
-        /// suppression du contenu déjà existant dans la div gallery ///
-        gallery.innerHTML = "" ;
+    /// suppression du contenu déjà existant dans la div gallery ///
+    gallery.innerHTML = "" ;
 
 
-        /// création des éléments de gallery pour chaque travaux /// 
-        projects.forEach(element => {
-           
-            const figure = createElement('figure', 'figure ' + element.id);
-            const img = document.createElement('img');
-            const figcaption = document.createElement('figcaption');
+    /// création des éléments de gallery pour chaque travaux /// 
+    projects.forEach(element => {
+        
+        const figure = createElement('figure', 'figure ' + element.id);
+        const img = document.createElement('img');
+        const figcaption = document.createElement('figcaption');
 
-            /// attribution à chaque élément, l'image et le titre ///
-            img.src = element.imageUrl;
-            img.alt = element.title;
-            figcaption.textContent = element.title;
+        /// attribution à chaque élément, l'image et le titre ///
+        img.src = element.imageUrl;
+        img.alt = element.title;
+        figcaption.textContent = element.title;
 
-            /// attribution de l'image et de figcaption à son élément parent : figure ///
-            figure.appendChild(img);
-            figure.appendChild(figcaption);
-            /// attribution de figure à son élément parent : gallery ///
-            gallery.appendChild(figure);
+        /// attribution de l'image et de figcaption à son élément parent : figure ///
+        figure.appendChild(img);
+        figure.appendChild(figcaption);
+        /// attribution de figure à son élément parent : gallery ///
+        gallery.appendChild(figure);
             
     });
 }
@@ -33,27 +33,43 @@ function showProjects(projects) {
 
 function filterProjects() {
         
-        document.querySelectorAll('.boutons button').forEach(bouton => {
-            bouton.addEventListener('click', event => {
-                /// Récupération de l'API pour les filtres ///
-                fetch('http://localhost:5678/api/works/')
-                .then(result => result.json())
-                .then(projects => {
-                    const travauxObjets = projects.filter(function (travaux) {
-                        if(event.target.dataset.id >= 1 ) {
-                            
-                            return travaux.categoryId == event.target.dataset.id;
-                        }
-                        else {
-                            return  travaux.categoryId >= 1;
-                        }
-                    }); 
-                
-                    /// affiche à la console, les éléments de la catégorie objet  ///
-                    showProjects(travauxObjets);
-                });
-            })
-          })
+    let a =document.querySelectorAll('.boutons button')
+    a.forEach(bouton => {
+        console.log(bouton);
+        bouton.addEventListener('click', event => {
+            a.forEach(b => {
+                b.style.backgroundColor= "white";
+                b.style.color ="#1D6154"
+            });
+            event.target.style.backgroundColor="#1D6154";
+            event.target.style.color="white";
+            /// Récupération de l'API pour les filtres ///
+            fetch('http://localhost:5678/api/works/')
+            .then(result => result.json())
+            .then(projects => {
+                const travauxObjets = projects.filter(function (travaux) {
+                    if(event.target.dataset.id >= 1 ) {
+                        
+                        return travaux.categoryId == event.target.dataset.id;
+                    }
+                    else {
+                        return  travaux.categoryId >= 1;
+                    }
+                }); 
+            
+                /// affiche à la console, les éléments de la catégorie objet  ///
+                showProjects(travauxObjets);
+            });
+        });
+    });
+}
+
+function changeColorButtonFilter (button,) {
+   button.forEach(function(event) {
+    event.style.backgroundColor ="";
+   });
+
+}
 
     /// Sélection du bouton tous ////
         /*const boutonTous = document.querySelector(".bouton-tous");
@@ -99,82 +115,82 @@ function filterProjects() {
             showProjects(travauxHotel);
         });*/
        
-}
+
     
 /// fonction qui ajoute les edits à la page d'accueil après connexion réussie ///
 function editsAfterLogin () {
     ///récupération du token stocké
     var token = sessionStorage.getItem('token');
     if (token != null) {
+        /// si le token n'est pas nul et que donc la connexion est réussie, on applique les changements à la page principale///
         edits();
     }
 }
 
 function edits () {
 
-        /// création de la bande noire au dessus du header ///
+    /// création de la bande noire au dessus du header ///
 
-        /// création d'une div regroupant les éléments de la bande noire///
-        const element = document.getElementById("body");
-        const header = document.getElementById("header");
-        const containerEdits = createElement("div", "container-edits");
-        ///containerEdits.setAttribute('id','container-edits');
-        /// insertion de cette div au dessus du header ///
-        element.insertBefore(containerEdits,header);
-
-
-        /// création de l'icône d'édition ///
-        const iconHeader = createIcone( 'icon-edit', [ "fa-pen-to-square"]);
-        /// insertion de cette icône dans la div créée précédemment///
-        containerEdits.appendChild(iconHeader);
-
-        /// création du texte "Mode édition" ///
-        const editionMode = createSpan("Mode édition", 'edition-mode');
-        ///insertion de ce texte dans la div créée précédemment///
-        containerEdits.appendChild(editionMode);
-
-        /// création du texte "publier les changements" ///
-        const publishChanges = createSpan("publier les changements", 'publish-changes');
-        ///insertion de ce texte dans la div créée précédemment///
-        containerEdits.appendChild(publishChanges);
-        
-        /// remplacement de "login" par "logout" dans nav ///
-        document.getElementById("login").innerHTML ="logout";
-        
-        
-        /// création d'une div en dessous de l'image de présentation ///
-        const getIntro = document.getElementById("figure");
-        const modifyUnderIntro = createElement("div",'container-intro');
-        getIntro.appendChild(modifyUnderIntro);
-   
-        let linkIntro = createLinkUpdate();
-        modifyUnderIntro.append(linkIntro);
-
-        
-        /// Masquer les boutons filtres ///
-        const hideBoutons = document.getElementById("boutons");
-        hideBoutons.style.display ='none';
-
-        const getContainerProjects = document.getElementById("portfolio")
-        const getProjectTitle = document.getElementById("mes-projets");
-        const modifyNextToProject = createElement("div",'container-projects');
-        getContainerProjects.append(modifyNextToProject);
-        modifyNextToProject.appendChild(getProjectTitle)
+    /// création d'une div regroupant les éléments de la bande noire///
+    const element = document.getElementById("body");
+    const header = document.getElementById("header");
+    const containerEdits = createElement("div", "container-edits");
+    ///containerEdits.setAttribute('id','container-edits');
+    /// insertion de cette div au dessus du header ///
+    element.insertBefore(containerEdits,header);
 
 
-        let linkNextToProject = createLinkUpdate();
-        linkNextToProject.setAttribute('id','second-modify');
-        modifyNextToProject.appendChild(linkNextToProject);
+    /// création de l'icône d'édition ///
+    const iconHeader = createIcone( 'icon-edit', [ "fa-pen-to-square"]);
+    /// insertion de cette icône dans la div créée précédemment///
+    containerEdits.appendChild(iconHeader);
 
-        hideBoutons.before(modifyNextToProject);
-    }
+    /// création du texte "Mode édition" ///
+    const editionMode = createSpan("Mode édition", 'edition-mode');
+    ///insertion de ce texte dans la div créée précédemment///
+    containerEdits.appendChild(editionMode);
+
+    /// création du texte "publier les changements" ///
+    const publishChanges = createSpan("publier les changements", 'publish-changes');
+    ///insertion de ce texte dans la div créée précédemment///
+    containerEdits.appendChild(publishChanges);
+    
+    /// remplacement de "login" par "logout" dans nav ///
+    document.getElementById("login").innerHTML ="logout";
+    
+    
+    /// création d'une div en dessous de l'image de présentation ///
+    const getIntro = document.getElementById("figure");
+    const modifyUnderIntro = createElement("div",'container-intro');
+    getIntro.appendChild(modifyUnderIntro);
+
+    let linkIntro = createLinkUpdate();
+    modifyUnderIntro.append(linkIntro);
+
+    
+    /// Masquer les boutons filtres ///
+    const hideBoutons = document.getElementById("boutons");
+    hideBoutons.style.display ='none';
+
+    const getContainerProjects = document.getElementById("portfolio")
+    const getProjectTitle = document.getElementById("mes-projets");
+    const modifyNextToProject = createElement("div",'container-projects');
+    getContainerProjects.append(modifyNextToProject);
+    modifyNextToProject.appendChild(getProjectTitle)
+
+
+    let linkNextToProject = createLinkUpdate();
+    linkNextToProject.setAttribute('id','second-modify');
+    modifyNextToProject.appendChild(linkNextToProject);
+
+    hideBoutons.before(modifyNextToProject);
+}
 
 /// fonction d'ajout des éléments à l'intérieur de la modale ///
 function addModalElements () {
     fetch('http://localhost:5678/api/works')
     .then(response => response.json())
     .then(projects => {
-
 
         const getContainerImages = document.querySelector('.container-images');
         /// création des éléments de gallery pour chaque travaux /// 
@@ -184,8 +200,9 @@ function addModalElements () {
             /// attribution à chaque élément, l'image et le titre ///
             img.src = element.imageUrl;
             img.alt = element.title;
-
+/// création de l'icone poubelle en lui donnant l'id correspondant à l'id du work ///
             const iconTrash = createIcone( element.id, [ "fa-trash-can"]);
+            /// au clique de cette icone, suppression du work correspondant à l'icone ///
             iconTrash.setAttribute("onclick", "deleteProduct(this.id)");
             figure.appendChild(iconTrash);
 
@@ -214,9 +231,12 @@ async function deleteProduct(idWork) {
         }
         
     });
+    /// si la réponse que renvoie la méthode delete...///
     if(res.status == 204) {
+        /// on supprime l'élement selectionné de la modale
         let getFigureModal = document.getElementById('figure-modal ' + idWork);
         getFigureModal.remove();
+        /// on supprime l'élement selectionné de la page principale///
         let getFigurePortfolio = document.getElementById('figure ' + idWork);
         getFigurePortfolio.remove();
 
@@ -236,8 +256,11 @@ function showModal (modal, button, cross, wrapper) {
         btnModify.addEventListener("click", function () {
             getModal.style.display ='flex';
         });
+        /// au clique partout sur la page, on ferme la modale
         getModal.addEventListener("click", closeModal)
+        /// au clique sur la croix, on ferme la modale
         getModal.querySelector(cross).addEventListener('click', closeModal)
+        /// On empêche la possibilité de cliquer n'importe où pour fermer la modale, mais uniquement à l'extérieur de celle-ci///
         getModal.querySelector(wrapper).addEventListener('click', Propagation)
     }
     
@@ -258,8 +281,6 @@ function Propagation (e){
 function changeModal(display1, display2) {
     document.querySelector('.modal-wrapper').style.display=display1;
     document.querySelector('.modal-form').style.display=display2;
-
-
 }
 
 /// Au clique du bouton d'ajout de photo, fonctions changeModal et showModal s'appliquent ///
@@ -275,8 +296,6 @@ let getArrowLeft = document.querySelector('.fa-arrow-left-long');
 getArrowLeft.addEventListener('click',() => {    
     changeModal('flex','none');
 });
-
-
 
 
 ///Affichage de l'image dans le formulaire après avoir l'avoir sélectionnée ///
@@ -333,6 +352,7 @@ async function addWorkElement () {
         body: formData
     })
     .then(res => {
+        /// Si reponse du Post est favorable, alors on recharge la page automatiquement ///
         if (res.status>= 200 && res.status <205) {
             window.location.reload();
         }
