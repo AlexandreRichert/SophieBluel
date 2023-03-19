@@ -64,12 +64,6 @@ function filterProjects() {
     });
 }
 
-function changeColorButtonFilter (button,) {
-   button.forEach(function(event) {
-    event.style.backgroundColor ="";
-   });
-
-}
 
     /// Sélection du bouton tous ////
         /*const boutonTous = document.querySelector(".bouton-tous");
@@ -156,8 +150,12 @@ function edits () {
     containerEdits.appendChild(publishChanges);
     
     /// remplacement de "login" par "logout" dans nav ///
-    document.getElementById("login").innerHTML ="logout";
-    
+    let logout=document.getElementById("login");
+    logout.innerHTML ="logout";
+    logout.addEventListener("click", () => {
+        sessionStorage.removeItem('token');
+        window.location.href= "index.html";
+    });    
     
     /// création d'une div en dessous de l'image de présentation ///
     const getIntro = document.getElementById("figure");
@@ -335,6 +333,10 @@ async function addWorkElement () {
     form.addEventListener('submit', (e) => {
     e.preventDefault();
     
+    if (!title.value || !image.files[0] || !category.value) {
+        alert ("Veuillez remplir tous les champs");
+        return;
+    }
     /// Création d'un nouveau formData///
     const formData = new FormData();
     ///Attribution de l'input du titre au formData
