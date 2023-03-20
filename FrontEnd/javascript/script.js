@@ -7,26 +7,29 @@ function showProjects(projects) {
 
 
     /// création des éléments de gallery pour chaque travaux /// 
-    projects.forEach(element => {
-        
-        const figure = createElement('figure', 'figure ' + element.id);
-        const img = document.createElement('img');
-        const figcaption = document.createElement('figcaption');
-
-        /// attribution à chaque élément, l'image et le titre ///
-        img.src = element.imageUrl;
-        img.alt = element.title;
-        figcaption.textContent = element.title;
-
-        /// attribution de l'image et de figcaption à son élément parent : figure ///
-        figure.appendChild(img);
-        figure.appendChild(figcaption);
-        /// attribution de figure à son élément parent : gallery ///
-        gallery.appendChild(figure);
+    projects.forEach(element => { 
+        showProjectsOnGallery(element)
             
     });
 }
+function showProjectsOnGallery (element) {
+    const gallery = document.querySelector('.gallery');
+    const figure = createElement('figure', 'figure ' + element.id);
+    const img = document.createElement('img');
+    const figcaption = document.createElement('figcaption');
 
+    /// attribution à chaque élément, l'image et le titre ///
+    img.src = element.imageUrl;
+    img.alt = element.title;
+    figcaption.textContent = element.title;
+
+    /// attribution de l'image et de figcaption à son élément parent : figure ///
+    figure.appendChild(img);
+    figure.appendChild(figcaption);
+    /// attribution de figure à son élément parent : gallery ///
+    gallery.appendChild(figure);
+}
+    
 
 
 ///\\\\\\\\\\\\\\\\ BOUTONS FILTRES ///////////////////
@@ -152,6 +155,7 @@ function edits () {
     /// remplacement de "login" par "logout" dans nav ///
     let logout=document.getElementById("login");
     logout.innerHTML ="logout";
+    /// au clique de logout, suppression du token et renvoi sur la page d'accueil///
     logout.addEventListener("click", () => {
         sessionStorage.removeItem('token');
         window.location.href= "index.html";
@@ -190,33 +194,38 @@ function addModalElements () {
     .then(response => response.json())
     .then(projects => {
 
-        const getContainerImages = document.querySelector('.container-images');
+        
         /// création des éléments de gallery pour chaque travaux /// 
         projects.forEach(element => {
-            const figure = createElement('figure', 'figure-modal ' + element.id);
-            const img = createElement('img', 'image-modal ' + element.id);
-            /// attribution à chaque élément, l'image et le titre ///
-            img.src = element.imageUrl;
-            img.alt = element.title;
-/// création de l'icone poubelle en lui donnant l'id correspondant à l'id du work ///
-            const iconTrash = createIcone( element.id, [ "fa-trash-can"]);
-            /// au clique de cette icone, suppression du work correspondant à l'icone ///
-            iconTrash.setAttribute("onclick", "deleteProduct(this.id)");
-            figure.appendChild(iconTrash);
-
-            const edition = createSpan("éditer","editer");
-            figure.appendChild(edition);
-            
-
-            /// attribution de l'image et de figcaption à son élément parent : figure ///
-            figure.appendChild(img);
-            /// attribution de figure à son élément parent : gallery ///
-            getContainerImages.appendChild(figure);
-            
+            showProjectsOnModal(element);
         });
     })
     .catch((erreur) => console.log('Erreur : ' + erreur));
 }
+
+function showProjectsOnModal (element) {
+    const getContainerImages = document.querySelector('.container-images');
+    const figure = createElement('figure', 'figure-modal ' + element.id);
+    const img = createElement('img', 'image-modal ' + element.id);
+    /// attribution à chaque élément, l'image et le titre ///
+    img.src = element.imageUrl;
+    img.alt = element.title;
+/// création de l'icone poubelle en lui donnant l'id correspondant à l'id du work ///
+    const iconTrash = createIcone( element.id, [ "fa-trash-can"]);
+    /// au clique de cette icone, suppression du work correspondant à l'icone ///
+    iconTrash.setAttribute("onclick", "deleteProduct(this.id)");
+    figure.appendChild(iconTrash);
+
+    const edition = createSpan("éditer","editer");
+    figure.appendChild(edition);
+    
+
+    /// attribution de l'image et de figcaption à son élément parent : figure ///
+    figure.appendChild(img);
+    /// attribution de figure à son élément parent : gallery ///
+    getContainerImages.appendChild(figure);
+}
+    
 
 /// fonction permettant la suppression d'un travaux au clique de l'icone de suppression ///
 async function deleteProduct(idWork) {
@@ -333,6 +342,7 @@ async function addWorkElement () {
     form.addEventListener('submit', (e) => {
     e.preventDefault();
     
+    /// Si une seule information est manquante, affichage d'un message d'erreur
     if (!title.value || !image.files[0] || !category.value) {
         alert ("Veuillez remplir tous les champs");
         return;
@@ -354,13 +364,36 @@ async function addWorkElement () {
         body: formData
     })
     .then(res => {
-        /// Si reponse du Post est favorable, alors on recharge la page automatiquement ///
-        if (res.status>= 200 && res.status <205) {
-            window.location.reload();
+        // Afficher la réponse dans la console
+        if (res.status === 201) {
+            return res.json();
         }
+        
+    })
+    .then(data => {
+        ///addWorkAfterForm('.gallery', 'figure', 'figure', data)
+        showProjectsOnGallery(data);
+        showProjectsOnModal(data);
+        changeModal('flex','none');
     })
     .catch(error => {
         console.error('Erreur lors du téléchargement', error);
     });
     });
+}
+
+
+function addWorkAfterForm (getContainerWork, containerImage, idContainerImage, element) {
+    const getContainerImages = document.querySelector(getContainerWork);
+/// création des éléments de gallery pour chaque travaux /// 
+    const figure = createElement(containerImage, idContainerImage + element.id);
+    const img = createElement('img');
+    const figcaption = document.createElement('figcaption');
+    /// attribution à chaque élément, l'image et le titre ///
+    img.src = element.imageUrl;
+    img.alt = element.title;
+    figcaption.textContent = element.title;
+    figure.appendChild(img);
+    figure.appendChild(figcaption);
+    getContainerImages.appendChild(figure);
 }

@@ -3,7 +3,6 @@ async function login () {
 
 
     const formEl = document.getElementById('login-form');
-    console.log(formEl);
 
     formEl.addEventListener('submit',event => {
         event.preventDefault();
