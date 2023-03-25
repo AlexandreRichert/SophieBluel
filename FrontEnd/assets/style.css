@@ -93,6 +93,7 @@ nav ul {
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
+	cursor: pointer;
 }
 
 nav li a {
@@ -153,11 +154,7 @@ li:hover {
 	margin: 0px 10px;
 	background-color: white;
 	border: #1D6154 1px solid;
-}
-
-.boutons button:hover {
-	color: #FFFFFF;
-	background-color: #1D6154;
+	cursor: pointer;
 }
 
 

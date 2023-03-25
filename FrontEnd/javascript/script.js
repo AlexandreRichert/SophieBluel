@@ -6,16 +6,21 @@ function showProjects(projects) {
     gallery.innerHTML = "" ;
 
 
-    /// création des éléments de gallery pour chaque travaux /// 
+    /// pour chaque travaux, on applique la fonction d'affichage de projet dans la galerie /// 
     projects.forEach(element => { 
         showProjectsOnGallery(element)
             
     });
 }
+/// Fonction affichage des projets dans la page d'accueil
 function showProjectsOnGallery (element) {
+    ///récupération du conteneur accueillant l'ensemble des travaux
     const gallery = document.querySelector('.gallery');
+    /// création d'une figure avec un id "figure + numéro id du projet"
     const figure = createElement('figure', 'figure ' + element.id);
+    /// création d'une image
     const img = document.createElement('img');
+    /// création d'une figcaption
     const figcaption = document.createElement('figcaption');
 
     /// attribution à chaque élément, l'image et le titre ///
@@ -38,19 +43,21 @@ function filterProjects() {
         
     let a =document.querySelectorAll('.boutons button')
     a.forEach(bouton => {
-        console.log(bouton);
         bouton.addEventListener('click', event => {
+            ///Pour chaque clique sur un bouton
             a.forEach(b => {
+                /// Autres boutons deviennent blanc 
                 b.style.backgroundColor= "white";
                 b.style.color ="#1D6154"
             });
+            /// bouton selectionné devient vert
             event.target.style.backgroundColor="#1D6154";
             event.target.style.color="white";
             /// Récupération de l'API pour les filtres ///
             fetch('http://localhost:5678/api/works/')
             .then(result => result.json())
             .then(projects => {
-                const travauxObjets = projects.filter(function (travaux) {
+                const worksFiltered = projects.filter(function (travaux) {
                     if(event.target.dataset.id >= 1 ) {
                         
                         return travaux.categoryId == event.target.dataset.id;
@@ -61,57 +68,12 @@ function filterProjects() {
                 }); 
             
                 /// affiche à la console, les éléments de la catégorie objet  ///
-                showProjects(travauxObjets);
+                showProjects(worksFiltered);
             });
         });
     });
 }
 
-
-    /// Sélection du bouton tous ////
-        /*const boutonTous = document.querySelector(".bouton-tous");
-            /// Au clique du bouton tous, retourne les éléments de toutes les catégories ////
-        boutonTous.addEventListener("click", function () {
-            const travauxTous = projects.filter(function (travaux) {
-                return travaux.categoryId <= 3;
-            });
-            /// affiche à la console, les éléments de toutes les catégories (pas nécessaire) ///
-            console.log(travauxTous)
-            showProjects(travauxTous);
-        })
-
-        /// Sélection du bouton objets ////
-        const boutonObjets = document.querySelector(".bouton-objets");
-            /// Au clique du bouton objets, retourne les éléments de la catégorie objet ////
-        boutonObjets.addEventListener("click", function () {
-            const travauxObjets = projects.filter(function (travaux) {
-                return travaux.categoryId === 1;
-            });
-            /// affiche à la console, les éléments de la catégorie objet  ///
-            console.log(travauxObjets)
-            showProjects(travauxObjets);
-            })
-
-        const boutonsAppartements = document.querySelector(".bouton-appartements");
-        /// Au clique du bouton appartements, retourne les éléments de la catégorie appt ////
-        boutonsAppartements.addEventListener("click", function () {
-            const travauxAppartements = projects.filter(function (travaux) {
-                return travaux.categoryId === 2;
-            });
-            /// affiche à la console, les éléments de la catégorie appt  ///
-            console.log(travauxAppartements)
-            showProjects(travauxAppartements);
-            });
-        
-        const boutonsHotel = document.querySelector(".bouton-hotel");
-        boutonsHotel.addEventListener("click", function () {
-            const travauxHotel = projects.filter(function (travaux) {
-                return travaux.categoryId === 3;
-            });
-            console.log(travauxHotel)
-            showProjects(travauxHotel);
-        });*/
-       
 
     
 /// fonction qui ajoute les edits à la page d'accueil après connexion réussie ///
@@ -125,24 +87,21 @@ function editsAfterLogin () {
 }
 
 function edits () {
-
     /// création de la bande noire au dessus du header ///
 
     /// création d'une div regroupant les éléments de la bande noire///
     const element = document.getElementById("body");
     const header = document.getElementById("header");
     const containerEdits = createElement("div", "container-edits");
-    ///containerEdits.setAttribute('id','container-edits');
-    /// insertion de cette div au dessus du header ///
+    /// insertion de cette div au dessus du header dans le body ///
     element.insertBefore(containerEdits,header);
 
-
-    /// création de l'icône d'édition ///
+    /// création de l'icône d'édition /// /// fonction createIcone dans elementHtml.js
     const iconHeader = createIcone( 'icon-edit', [ "fa-pen-to-square"]);
     /// insertion de cette icône dans la div créée précédemment///
     containerEdits.appendChild(iconHeader);
 
-    /// création du texte "Mode édition" ///
+    /// création du texte "Mode édition" /// /// fonction createSpan dans elementHtml.js
     const editionMode = createSpan("Mode édition", 'edition-mode');
     ///insertion de ce texte dans la div créée précédemment///
     containerEdits.appendChild(editionMode);
@@ -190,16 +149,19 @@ function edits () {
 
 /// fonction d'ajout des éléments à l'intérieur de la modale ///
 function addModalElements () {
+    /// Récupération des travaux (méthode GET par défaut) ///
     fetch('http://localhost:5678/api/works')
     .then(response => response.json())
     .then(projects => {
 
         
-        /// création des éléments de gallery pour chaque travaux /// 
+        /// Pour chaque travaux dans la Base de données /// 
         projects.forEach(element => {
+            /// On les affiche dans la modale avec la fonction showProjectsOnModal
             showProjectsOnModal(element);
         });
     })
+    /// Messge d'erreur en cas de problème avec la méthode FETCH
     .catch((erreur) => console.log('Erreur : ' + erreur));
 }
 
@@ -215,14 +177,15 @@ function showProjectsOnModal (element) {
     /// au clique de cette icone, suppression du work correspondant à l'icone ///
     iconTrash.setAttribute("onclick", "deleteProduct(this.id)");
     figure.appendChild(iconTrash);
-
+/// création du span contenant le texte éditer
     const edition = createSpan("éditer","editer");
+    /// attribution du span à son élément parent: figure ///
     figure.appendChild(edition);
     
 
-    /// attribution de l'image et de figcaption à son élément parent : figure ///
+    /// attribution de l'image à son élément parent : figure ///
     figure.appendChild(img);
-    /// attribution de figure à son élément parent : gallery ///
+    /// attribution de figure à son élément parent : container de la modale ///
     getContainerImages.appendChild(figure);
 }
     
@@ -331,69 +294,54 @@ input.addEventListener('change', function(event) {
 async function addWorkElement () {
     ///récupération du formulaire ///
     const form = document.querySelector('.add-work-form');
-        ///récupération de l'id de l'image du form ///
+        ///récupération de l'image du form ///
     const image = document.getElementById('image_uploads');
-        ///récupération de l'id du titre ///
+        ///récupération du titre ///
     const title = document.getElementById('title');
-        ///récupération de l'id de la catégorie ///
+        ///récupération de la catégorie ///
     const category = document.getElementById('categories');
 
     ///Au submit du formulaire ///
     form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    /// Si une seule information est manquante, affichage d'un message d'erreur
-    if (!title.value || !image.files[0] || !category.value) {
-        alert ("Veuillez remplir tous les champs");
-        return;
-    }
-    /// Création d'un nouveau formData///
-    const formData = new FormData();
-    ///Attribution de l'input du titre au formData
-    formData.append('title',title.value);
-    ///Attribution de l'input de l'image au formData
-    formData.append('image', image.files[0]);
-    ///Attribution de l'input de la catégorie au formData
-    formData.append('category',category.value);
-    
-    fetch('http://localhost:5678/api/works', {
-        method: 'POST',
-        headers: {
-            'Authorization': `Bearer ${sessionStorage.getItem('token')}`
-        },
-        body: formData
-    })
-    .then(res => {
-        // Afficher la réponse dans la console
-        if (res.status === 201) {
-            return res.json();
-        }
+        e.preventDefault();
         
-    })
-    .then(data => {
-        ///addWorkAfterForm('.gallery', 'figure', 'figure', data)
-        showProjectsOnGallery(data);
-        showProjectsOnModal(data);
-        changeModal('flex','none');
-    })
-    .catch(error => {
-        console.error('Erreur lors du téléchargement', error);
-    });
+        /// Si une seule information est manquante, affichage d'un message d'erreur
+        if (!title.value || !image.files[0] || !category.value) {
+            alert ("Veuillez remplir tous les champs");
+            return;
+        }
+        /// Création d'un nouveau formData///
+        const formData = new FormData();
+        ///Attribution de l'input du titre au formData
+        formData.append('title',title.value);
+        ///Attribution de l'input de l'image au formData
+        formData.append('image', image.files[0]);
+        ///Attribution de l'input de la catégorie au formData
+        formData.append('category',category.value);
+        
+        fetch('http://localhost:5678/api/works', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+            },
+            body: formData
+        })
+        .then(res => {
+            // Si le statut de la réponse = 201 alors la méthode a fonctionné
+            if (res.status === 201) {
+                ///retourne le résultat au format JSON
+                return res.json();
+            }
+            
+        })
+        .then(data => {
+            showProjectsOnGallery(data);
+            showProjectsOnModal(data);
+            changeModal('flex','none');
+        })
+        .catch(error => {
+            console.error('Erreur lors du téléchargement', error);
+        });
     });
 }
 
-
-function addWorkAfterForm (getContainerWork, containerImage, idContainerImage, element) {
-    const getContainerImages = document.querySelector(getContainerWork);
-/// création des éléments de gallery pour chaque travaux /// 
-    const figure = createElement(containerImage, idContainerImage + element.id);
-    const img = createElement('img');
-    const figcaption = document.createElement('figcaption');
-    /// attribution à chaque élément, l'image et le titre ///
-    img.src = element.imageUrl;
-    img.alt = element.title;
-    figcaption.textContent = element.title;
-    figure.appendChild(img);
-    figure.appendChild(figcaption);
-    getContainerImages.appendChild(figure);
-}
