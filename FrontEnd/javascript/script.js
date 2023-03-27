@@ -5,11 +5,9 @@ function showProjects(projects) {
     /// suppression du contenu déjà existant dans la div gallery ///
     gallery.innerHTML = "" ;
 
-
     /// pour chaque travaux, on applique la fonction d'affichage de projet dans la galerie /// 
     projects.forEach(element => { 
         showProjectsOnGallery(element)
-            
     });
 }
 /// Fonction affichage des projets dans la page d'accueil
@@ -23,9 +21,10 @@ function showProjectsOnGallery (element) {
     /// création d'une figcaption
     const figcaption = document.createElement('figcaption');
 
-    /// attribution à chaque élément, l'image et le titre ///
+    /// attribution à l'image créée précédemment, l'image et le titre du projet
     img.src = element.imageUrl;
     img.alt = element.title;
+    /// attribution à la figcaption créée précédemment, le titre du projet
     figcaption.textContent = element.title;
 
     /// attribution de l'image et de figcaption à son élément parent : figure ///
@@ -58,16 +57,17 @@ function filterProjects() {
             .then(result => result.json())
             .then(projects => {
                 const worksFiltered = projects.filter(function (travaux) {
+                    /// si le data.id du bouton cliqué >= 1
                     if(event.target.dataset.id >= 1 ) {
-                        
+                        /// renvoie les travaux ayant l'id de la catégorie = à l'id du bouton
                         return travaux.categoryId == event.target.dataset.id;
-                    }
+                    } /// sinon renvoie tous les travaux
                     else {
                         return  travaux.categoryId >= 1;
                     }
                 }); 
             
-                /// affiche à la console, les éléments de la catégorie objet  ///
+                /// affiche à la console, les travaux filtrés ///
                 showProjects(worksFiltered);
             });
         });
@@ -209,9 +209,25 @@ async function deleteProduct(idWork) {
         /// on supprime l'élement selectionné de la page principale///
         let getFigurePortfolio = document.getElementById('figure ' + idWork);
         getFigurePortfolio.remove();
+        changeModal('flex','none');
+        showSpanSuccess(".success","Le projet a bien été supprimé");
+    } if(res.status == 401) {
+        showSpanSuccess(".error","Vous n'êtes pas autorisé à supprimer ce projet");
+    } if(res.status == 500) {
+        showSpanSuccess(".error","Il y a eu un problème, veuillez contacter l'administrateur");
 
     }
     
+}
+
+function showSpanSuccess (container,messageShowed) {
+    let spanSuccess = document.querySelector(container);
+    spanSuccess.innerHTML=messageShowed;
+    spanSuccess.style.display='flex';
+    setTimeout(() => {
+        spanSuccess.style.display='none';
+        spanSuccess.innerHTML="";
+      }, 3000);
 }
 
 /// focntion permettant d'afficher la modale sélectionnée ///
@@ -328,6 +344,10 @@ async function addWorkElement () {
         })
         .then(res => {
             // Si le statut de la réponse = 201 alors la méthode a fonctionné
+            if (res.status === 401) {
+                ///retourne le résultat au format JSON
+            showSpanSuccess('.error-add-project',"Vous n'êtes pas autorisé à ajouter ce projet");
+            }
             if (res.status === 201) {
                 ///retourne le résultat au format JSON
                 return res.json();
@@ -338,6 +358,7 @@ async function addWorkElement () {
             showProjectsOnGallery(data);
             showProjectsOnModal(data);
             changeModal('flex','none');
+            showSpanSuccess('.success','Le projet a bien été ajouté');
         })
         .catch(error => {
             console.error('Erreur lors du téléchargement', error);

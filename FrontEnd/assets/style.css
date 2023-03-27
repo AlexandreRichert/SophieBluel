@@ -552,3 +552,21 @@ input[type=file] {
 	object-fit: contain;
 }
 
+.success, .error, .error-add-project {
+	display: none;
+    width: 30%;
+    height: 40px;
+    border-radius: 20px;
+	border: 2px solid black;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.error, .error-add-project {
+    color: red;
+}
+
+.success {
+	color: green;
+}

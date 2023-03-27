@@ -22,6 +22,8 @@
 			<button id="cross-mark"><i class="fa-solid fa-xmark"></i></button>
 		</div>
 		<h1>Galerie Photo</h1>
+		<span class="success"></span>
+		<span class="error"></span>
 		<div class="wrapper-works">
 			<div class="container-works">
 				<!--div contenant les travaux ajoutés dynamiquement ainsi que les icones et textes "éditer"-->
@@ -30,8 +32,7 @@
 				</div>
 			</div>
 		</div>
-		<span class="success"></span>
-		<span class="error"></span>
+		
 		<div class="modal-line">
 		</div>
 		<button class="add-image" id="add-image">Ajouter une photo</button>
@@ -46,6 +47,7 @@
 		<!--formulaire d'ajout de travaux-->
 		<form method="post" enctype="multipart/form-data" class="add-work-form">
 			<h2>Ajout photo</h2>
+			<span class="error-add-project"></span>
 			<div class="add-work-image">
 				<i class="fa-regular fa-image"></i>
 				<div class="add-work-image-button">
